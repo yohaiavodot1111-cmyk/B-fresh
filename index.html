@@ -51,6 +51,15 @@ button,input,select{font:inherit;color:inherit}
 .mast{background:var(--paper);border-bottom:1px solid var(--rule);position:relative;z-index:3}
 .mast .in{max-width:1440px;margin:0 auto;padding:0 clamp(16px,3vw,36px);min-height:var(--mast-h);display:flex;align-items:center;justify-content:space-between;gap:16px}
 .org{display:flex;align-items:center;gap:14px;min-width:0}
+.logos{display:none;align-items:center;gap:12px;flex:none}
+.logos.has{display:flex}
+.logos-sep{display:none}
+.logos.has + .logos-sep{display:block}
+.lg{display:none;height:42px;width:auto;max-width:120px;object-fit:contain}
+.lg.ok{display:block}
+@media (max-width:560px){.lg{height:34px;max-width:90px}.logos{gap:8px}.org{gap:10px}}
+@media (max-width:560px){.logos.has ~ .o2,.logos.has ~ .sep:not(.logos-sep){display:none}}
+@media (max-width:380px){.org .o2,.org .sep:not(.logos-sep){display:none}}
 .org .o1{font-weight:700;font-size:.95rem;color:var(--ink);white-space:nowrap}
 .org .sep{width:1px;height:22px;background:var(--rule)}
 .org .o2{font-weight:500;font-size:.95rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;user-select:none;-webkit-user-select:none}
@@ -330,6 +339,8 @@ label.chk{display:flex;align-items:center;gap:8px;font-weight:400;font-size:.94r
 
 <header class="mast"><div class="in">
   <div class="org">
+    <span class="logos" id="logos"><img class="lg" data-base="logo" alt="" decoding="async"><img class="lg" data-base="logo 1" alt="" decoding="async"></span>
+    <span class="sep logos-sep" aria-hidden="true"></span>
     <span class="o1">חיל האוויר</span>
     <span class="sep" aria-hidden="true"></span>
     <span class="o2" id="orgTitle">מסלול השוחרות</span>
@@ -608,6 +619,29 @@ label.chk{display:flex;align-items:center;gap:8px;font-weight:400;font-size:.94r
 
 <div class="toast" id="toast"></div>
 
+<script>
+/* לוגואים: הקבצים logo ו logo 1 מאותה תיקייה בגיטהאב (png, svg, webp או jpg) */
+(() => {
+  const exts = ['png', 'svg', 'webp', 'jpg', 'jpeg'];
+  const dirs = ['', 'images/', 'img/', 'assets/'];
+  const box = document.getElementById('logos');
+  let iconSet = false;
+  box.querySelectorAll('img.lg').forEach(img => {
+    const base = img.dataset.base;
+    const names = [...new Set([base, base.replace(/\s+/g, ''), base.replace(/\s+/g, '_'), base.replace(/\s+/g, '-'), base.charAt(0).toUpperCase() + base.slice(1)])];
+    const cands = [];
+    dirs.forEach(d => names.forEach(n => exts.forEach(e => cands.push(d + encodeURIComponent(n) + '.' + e))));
+    let i = 0;
+    const next = () => { if (i >= cands.length){ img.remove(); return; } img.src = cands[i++]; };
+    img.onerror = next;
+    img.onload = () => {
+      img.onerror = null; img.classList.add('ok'); box.classList.add('has');
+      if (!iconSet){ iconSet = true; const l = document.createElement('link'); l.rel = 'icon'; l.href = img.src; document.head.appendChild(l); }
+    };
+    next();
+  });
+})();
+</script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 /* =====================================================================
