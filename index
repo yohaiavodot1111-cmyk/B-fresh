@@ -1,1 +1,1229 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0a2342">
+<title>הטבת שוחרים · שלוחת אשדוד</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0a2342; --navy2:#123461; --blue:#1d5fa7; --blue-soft:#eaf1fa; --blue-line:#c9dbef;
+  --bg:#f3f5f8; --card:#fff; --line:#dde3eb; --line2:#c8d1dd; --text:#16243a; --muted:#5d6b80; --soft:#f7f9fb;
+  --ok:#1f7a4d; --ok-soft:#e8f4ee; --bad:#b42335; --bad-soft:#fbecee; --gray:#5d6b80; --gray-soft:#eef1f5;
+  --gold:#94701f; --gold-soft:#f8f1e1;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Heebo',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+button,input,select{font:inherit;color:inherit}
+.hidden{display:none!important}
 
+/* ---------- כותרת רשמית ---------- */
+.gov{background:var(--navy);color:#fff}
+.gov .in{max-width:1240px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:14px}
+.gov svg{width:44px;height:auto;flex:none}
+.gov .t1{font-weight:700;font-size:1rem;line-height:1.2}
+.gov .t2{font-size:.8rem;color:#b9c8dd}
+.gov .sp{flex:1}
+.gov .chip{border:1px solid rgba(255,255,255,.3);border-radius:6px;padding:5px 10px;font-size:.8rem;font-weight:500;white-space:nowrap}
+.gov .gbtn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:6px;padding:6px 12px;font-size:.84rem;font-weight:500;cursor:pointer}
+.gov .gbtn:hover{background:rgba(255,255,255,.18)}
+.nb{white-space:nowrap}
+@media(max-width:560px){
+  .gov .in{padding:10px 14px;gap:10px}
+  .gov svg{width:36px}
+  .gov .t1{font-size:.88rem;white-space:nowrap}
+  .gov .t2 .ext{display:none}
+}
+.stripe{height:4px;background:linear-gradient(90deg,var(--blue) 0 70%,#7fb1e3 70% 100%)}
+
+/* ---------- כללי ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid transparent;border-radius:8px;padding:10px 16px;font-weight:600;font-size:.95rem;cursor:pointer;transition:background .15s,border-color .15s}
+.btn:disabled{opacity:.55;cursor:default}
+.btn.pri{background:var(--blue);color:#fff}
+.btn.pri:hover{background:#174f8d}
+.btn.navy{background:var(--navy);color:#fff}
+.btn.lite{background:#fff;border-color:var(--line2);color:var(--text)}
+.btn.lite:hover{background:var(--soft)}
+.btn.red{background:var(--bad-soft);color:var(--bad)}
+.btn.gold{background:var(--gold);color:#fff}
+.btn.sm{padding:5px 10px;font-size:.82rem;border-radius:6px}
+.btn.block{width:100%;padding:14px;font-size:1.05rem}
+.link{background:none;border:0;color:var(--blue);font-weight:500;cursor:pointer;font-size:.88rem;text-decoration:underline;text-underline-offset:3px}
+.err{color:var(--bad);font-size:.9rem;font-weight:500;min-height:1.3em;margin-top:10px}
+.spin{width:18px;height:18px;border-radius:50%;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;animation:sp .7s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+
+/* =====================================================================
+   שוחר
+   ===================================================================== */
+#cadetApp main{max-width:480px;margin:0 auto;padding:22px 16px 110px}
+.view{display:none}
+.view.on{display:block;animation:in .25s ease}
+@keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 1px 3px rgba(16,36,66,.06)}
+.pad{padding:22px 20px}
+.kicker{font-size:.8rem;font-weight:600;color:var(--blue)}
+h1.title{font-size:1.45rem;font-weight:800;color:var(--navy);margin:4px 0 6px}
+.lead{color:var(--muted);font-size:.93rem;line-height:1.55}
+.offer{display:flex;align-items:center;gap:14px;margin:18px 0;padding:14px 16px;border:1px solid var(--blue-line);background:var(--blue-soft);border-radius:8px}
+.offer .pct{font-size:2.3rem;font-weight:800;color:var(--navy);line-height:1;direction:ltr}
+.offer div{font-size:.9rem;color:var(--navy2);line-height:1.45}
+.offer b{font-weight:700}
+label.lbl{display:block;font-weight:600;font-size:.88rem;margin-bottom:7px}
+.inp{width:100%;padding:13px 14px;border:1px solid var(--line2);border-radius:8px;background:#fff;font-size:1.25rem;font-weight:600;letter-spacing:.06em;text-align:center;direction:ltr;outline:none;transition:border-color .15s,box-shadow .15s}
+.inp::placeholder{font-size:.95rem;letter-spacing:0;font-weight:400;color:#97a3b4}
+.inp:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(29,95,167,.14)}
+.login-foot{display:flex;justify-content:space-between;align-items:center;margin-top:16px;padding-top:14px;border-top:1px solid var(--line);font-size:.8rem;color:var(--muted)}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.facts div{background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px;text-align:center;font-size:.78rem;color:var(--muted)}
+.facts b{display:block;color:var(--navy);font-size:.92rem;margin-bottom:2px}
+
+/* ---------- כרטיס סטטוס ---------- */
+.status-card{overflow:hidden}
+.band{display:flex;align-items:center;gap:12px;padding:16px 20px;color:#fff}
+.band svg{width:30px;height:30px;flex:none}
+.band .h{font-size:1.2rem;font-weight:800;line-height:1.2}
+.band .s{font-size:.82rem;opacity:.9}
+.band.ok{background:var(--ok)}
+.band.bad{background:var(--bad)}
+.band.gray{background:#6b7789}
+.who{padding:20px 20px 4px}
+.who .nm{font-size:1.75rem;font-weight:800;color:var(--navy);line-height:1.2}
+.who .cl{color:var(--muted);font-size:.92rem;margin-top:2px}
+.bday{margin:12px 20px 0;padding:10px 14px;border-radius:8px;background:var(--gold-soft);border:1px solid #e8d7ae;color:var(--gold);font-weight:600;font-size:.92rem}
+.facts3{display:grid;grid-template-columns:repeat(3,1fr);margin:16px 20px 0;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.facts3 div{padding:10px 12px;border-inline-start:1px solid var(--line)}
+.facts3 div:first-child{border-inline-start:0}
+.facts3 span{display:block;font-size:.74rem;color:var(--muted)}
+.facts3 b{display:block;font-size:1.08rem;font-weight:700;color:var(--navy);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.facts3 b.ltr{direction:ltr;text-align:right}
+.terms{margin:14px 20px 0;display:flex;gap:12px;align-items:center;padding:14px;border-radius:8px;background:var(--ok-soft);border:1px solid #c5e3d2}
+.terms .pct{font-size:1.9rem;font-weight:800;color:var(--ok);direction:ltr;line-height:1}
+.terms p{font-weight:600;color:#17543a;font-size:.98rem;line-height:1.45}
+.msg{padding:20px;font-size:1.08rem;font-weight:600;color:var(--navy);line-height:1.55}
+.msg small{display:block;font-weight:400;color:var(--muted);font-size:.9rem;margin-top:6px}
+.card-acts{padding:18px 20px 20px}
+.live{display:inline-flex;align-items:center;gap:6px}
+.live i{width:7px;height:7px;border-radius:50%;background:var(--ok);animation:pulse 1.6s infinite}
+@keyframes pulse{50%{opacity:.3}}
+
+/* ---------- הגרלה ---------- */
+.raffle{margin:14px 20px 0;padding:14px 16px;border:1px solid var(--line);border-radius:8px;background:var(--soft)}
+.raffle .top{display:flex;justify-content:space-between;align-items:baseline;font-size:.82rem;color:var(--muted);font-weight:600}
+.raffle .top b{color:var(--navy);font-size:1.05rem}
+.segs{display:flex;gap:4px;margin-top:10px}
+.segs i{flex:1;height:6px;border-radius:3px;background:#dfe5ed}
+.segs i.f{background:var(--blue)}
+.segs.full i.f{background:var(--gold)}
+.raffle .t{font-weight:700;margin-top:10px;font-size:.95rem;color:var(--navy)}
+.raffle .t.in{color:var(--gold)}
+.raffle .s{font-size:.78rem;color:var(--muted);margin-top:2px}
+
+/* ---------- מוכר ---------- */
+.branches{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.branches button{padding:11px;border-radius:8px;border:1px solid var(--line2);background:#fff;font-weight:600;cursor:pointer}
+.branches button.sel{background:var(--navy);border-color:var(--navy);color:#fff}
+.fixedb{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--soft);font-size:.9rem}
+.fixedb b{color:var(--navy)}
+.pin{display:flex;justify-content:center;gap:14px;direction:ltr;margin:22px 0 16px}
+.pin span{width:13px;height:13px;border-radius:50%;border:1.5px solid var(--navy)}
+.pin span.f{background:var(--navy)}
+.pin.shake{animation:shake .35s}
+@keyframes shake{25%{transform:translateX(-7px)}50%{transform:translateX(7px)}75%{transform:translateX(-4px)}}
+.keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;direction:ltr}
+.keypad button{padding:13px 0;border-radius:8px;border:1px solid var(--line2);background:#fff;font-size:1.5rem;font-weight:600;cursor:pointer}
+.keypad button:active{background:var(--blue-soft)}
+.keypad .ok{background:var(--blue);border-color:var(--blue);color:#fff}
+.keypad svg{width:22px;height:22px;vertical-align:middle}
+
+/* ---------- טיימר ---------- */
+.timer{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);padding:12px 20px max(12px,env(safe-area-inset-bottom));display:none;z-index:5;box-shadow:0 -2px 10px rgba(16,36,66,.06)}
+.timer.on{display:block}
+.timer .prog{position:absolute;top:-1px;right:0;height:3px;background:var(--blue);transition:width 1s linear}
+.timer .in{max-width:480px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
+.timer .l{font-size:.86rem;color:var(--muted)}
+.timer .v{font-size:1.45rem;font-weight:800;color:var(--navy);direction:ltr}
+.timer.low .prog{background:var(--bad)}
+.timer.low .v{color:var(--bad)}
+.site-foot{text-align:center;color:#8a96a8;font-size:.75rem;margin-top:26px}
+
+/* =====================================================================
+   מנהל
+   ===================================================================== */
+nav.tabs{background:#fff;border-bottom:1px solid var(--line)}
+nav.tabs .in{max-width:1240px;margin:0 auto;padding:0 20px;display:flex;gap:2px;overflow-x:auto}
+nav.tabs button{border:0;background:none;padding:13px 14px;font-weight:600;font-size:.92rem;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap}
+nav.tabs button.on{color:var(--navy);border-bottom-color:var(--blue)}
+.wrap{max-width:1240px;margin:0 auto;padding:22px 20px 40px}
+.ph{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:16px}
+.ph h2{font-size:1.35rem;font-weight:800;color:var(--navy)}
+.ph p{color:var(--muted);font-size:.88rem;margin-top:2px}
+.box{background:#fff;border:1px solid var(--line);border-radius:10px;padding:18px}
+.box h3{font-size:.95rem;font-weight:700;color:var(--navy);margin-bottom:14px;display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.box h3 small{font-weight:400;color:var(--muted);font-size:.8rem}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+.toolbar input,.toolbar select{padding:8px 11px;border:1px solid var(--line2);border-radius:7px;background:#fff}
+.toolbar input[type=search]{flex:1;min-width:200px}
+.count{color:var(--muted);font-size:.85rem;margin-inline-start:auto}
+.seg{display:inline-flex;border:1px solid var(--line2);border-radius:8px;overflow:hidden;background:#fff}
+.seg button{border:0;background:none;padding:7px 12px;font-weight:600;font-size:.85rem;color:var(--muted);cursor:pointer;border-inline-start:1px solid var(--line)}
+.seg button:first-child{border-inline-start:0}
+.seg button.on{background:var(--navy);color:#fff}
+.tbl{overflow:auto;border:1px solid var(--line);border-radius:8px;background:#fff;max-height:66vh}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th{position:sticky;top:0;background:var(--soft);text-align:right;font-weight:600;color:var(--muted);font-size:.78rem;padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap;cursor:pointer;user-select:none}
+td{padding:9px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+tbody tr:hover{background:#fafbfd}
+td.num{direction:ltr;text-align:right}
+.tag{display:inline-block;padding:2px 8px;border-radius:5px;font-size:.76rem;font-weight:600}
+.tag.ok{background:var(--ok-soft);color:var(--ok)}
+.tag.bad{background:var(--bad-soft);color:var(--bad)}
+.tag.cls{background:var(--blue-soft);color:var(--blue)}
+.tag.gold{background:var(--gold-soft);color:var(--gold)}
+.empty{color:var(--muted);text-align:center;padding:24px;font-size:.9rem}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-bottom:14px}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px 18px;border-top:3px solid var(--blue)}
+.kpi .l{color:var(--muted);font-size:.82rem;font-weight:500}
+.kpi .v{font-size:2.1rem;font-weight:800;color:var(--navy);line-height:1.15;margin-top:2px}
+.kpi .s{color:var(--muted);font-size:.78rem}
+.kpi.gold{border-top-color:var(--gold)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.g3{display:grid;grid-template-columns:2fr 1fr;gap:14px}
+@media(max-width:900px){.g2,.g3{grid-template-columns:1fr}}
+.vbars{display:flex;align-items:flex-end;gap:8px;height:170px;padding-top:20px}
+.vbars .c{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;min-width:0}
+.vbars .b{width:100%;max-width:40px;border-radius:3px 3px 0 0;background:var(--blue);position:relative;min-height:2px}
+.vbars .b span{position:absolute;top:-19px;left:50%;transform:translateX(-50%);font-size:.78rem;font-weight:700;color:var(--navy)}
+.vbars .x{font-size:.74rem;color:var(--muted);margin-top:6px;white-space:nowrap}
+.vbars.thin{gap:3px}
+.vbars.thin .b{background:#86b2e0}
+.vbars.thin .b span{display:none}
+.vbars.thin .x{font-size:.62rem}
+.hbars .r{display:grid;grid-template-columns:130px 1fr 40px;align-items:center;gap:12px;padding:6px 0}
+.hbars .lab{font-weight:600;font-size:.88rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hbars .lab small{display:block;color:var(--muted);font-weight:400;font-size:.74rem}
+.hbars .tr{height:8px;background:#e9edf3;border-radius:4px;overflow:hidden}
+.hbars .fl{height:100%;background:var(--blue)}
+.hbars .vv{font-weight:800;color:var(--navy);text-align:left}
+.bt{border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin-bottom:10px;background:var(--soft)}
+.bt .row{display:flex;justify-content:space-between;align-items:baseline}
+.bt .nm{font-weight:600;font-size:.9rem}
+.bt .v{font-size:1.7rem;font-weight:800;color:var(--navy)}
+.bt .p{height:6px;border-radius:3px;background:#e2e8f0;margin-top:6px;overflow:hidden}
+.bt .p i{display:block;height:100%;background:var(--navy)}
+.bt .pc{font-size:.76rem;color:var(--muted);margin-top:4px}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px}
+label.f{display:flex;flex-direction:column;gap:6px;font-weight:600;font-size:.86rem}
+label.f input,label.f select{padding:9px 11px;border:1px solid var(--line2);border-radius:7px;background:#fff;font-weight:500}
+label.f input:disabled{background:var(--soft);color:#a0aab8}
+label.f small{color:var(--muted);font-weight:400;font-size:.76rem}
+label.chk{display:flex;align-items:center;gap:8px;font-weight:500;font-size:.9rem;cursor:pointer}
+.code-in{font-size:1.4rem!important;letter-spacing:.3em;direction:ltr;text-align:center;font-weight:700!important}
+.stage{margin-top:14px;border-radius:10px;background:var(--navy);color:#fff;padding:24px 20px;text-align:center;min-height:160px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:6px}
+.stage .eb{font-size:.78rem;color:#9fc0e6;font-weight:600}
+.stage .roll{font-size:1.9rem;font-weight:800;min-height:2.5rem}
+.stage .sub{color:#b9c8dd;font-size:.88rem}
+.winners{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:8px}
+.winner{background:#fff;color:var(--navy);border-radius:8px;padding:10px 18px;min-width:170px;border-top:3px solid #d2ad5b;animation:pop .35s ease both}
+.winner b{display:block;font-size:1.1rem}
+.winner span{font-size:.8rem;color:var(--muted)}
+@keyframes pop{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:none}}
+.drop{display:block;border:1.5px dashed var(--line2);border-radius:10px;padding:32px 20px;text-align:center;background:#fff;cursor:pointer}
+.drop.over{border-color:var(--blue);background:var(--blue-soft)}
+.drop b{display:block;margin-bottom:4px;color:var(--navy)}
+.drop small{color:var(--muted)}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:6px;margin-bottom:14px}
+.cols div{background:#fff;border:1px solid var(--line);border-radius:7px;padding:7px 10px;font-size:.84rem}
+.cols b{color:var(--blue);margin-inline-end:8px}
+.summary{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0}
+.summary div{background:#fff;border:1px solid var(--line);border-radius:8px;padding:9px 14px;font-size:.9rem}
+.summary b{font-size:1.25rem;color:var(--navy);margin-inline-end:6px}
+.warn{background:var(--gold-soft);border:1px solid #e8d7ae;color:#6e5418;padding:10px 14px;border-radius:8px;margin:10px 0;font-size:.86rem;line-height:1.65}
+.links{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.lk{border:1px solid var(--line);border-radius:8px;padding:14px;display:grid;grid-template-columns:1fr auto;gap:14px}
+.lk .url{font-family:ui-monospace,monospace;font-size:.78rem;direction:ltr;text-align:left;background:var(--soft);border:1px solid var(--line);border-radius:6px;padding:7px 9px;margin:8px 0;word-break:break-all}
+.lk .qr{width:110px;height:110px;padding:5px;border:1px solid var(--line);border-radius:6px;background:#fff}
+.lk .qr img,.lk .qr canvas{width:100%!important;height:100%!important}
+.lk .acts{display:flex;gap:6px;flex-wrap:wrap}
+.modal{position:fixed;inset:0;background:rgba(10,35,66,.45);display:grid;place-items:center;z-index:50;padding:16px}
+.modal .m{background:#fff;border-radius:10px;padding:22px;width:100%;max-width:560px;max-height:92vh;overflow:auto}
+.modal .m h3{font-size:1.15rem;font-weight:800;color:var(--navy);margin-bottom:16px}
+.modal .acts{display:flex;gap:8px;margin-top:20px}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--navy);color:#fff;padding:11px 18px;border-radius:8px;font-size:.9rem;font-weight:500;opacity:0;transition:.2s;z-index:60;pointer-events:none}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.bad{background:var(--bad)}
+</style>
+</head>
+<body>
+
+<header class="gov">
+  <div class="in">
+    <svg viewBox="0 0 64 30" fill="none" stroke="#fff" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true">
+      <path d="M32 10 C24 5 12 4 2 5 C8 8 13 11 16 13 C11 13 7 14 4 15 C11 17 17 18 22 20 L32 23"/>
+      <path d="M32 10 C40 5 52 4 62 5 C56 8 51 11 48 13 C53 13 57 14 60 15 C53 17 47 18 42 20 L32 23"/>
+      <circle cx="32" cy="16" r="5.5" fill="#0a2342"/>
+      <path d="M32 12.4 L33.1 14.9 L35.6 15.1 L33.7 16.8 L34.3 19.3 L32 18 L29.7 19.3 L30.3 16.8 L28.4 15.1 L30.9 14.9 Z" fill="#fff" stroke="none"/>
+    </svg>
+    <div>
+      <div class="t1">חיל האוויר · מסלול השוחרות</div>
+      <div class="t2" id="govSub">שלוחת אשדוד<span class="ext"> · הטבת שוחרים ברשת <span class="nb">B FRESH</span></span></div>
+    </div>
+    <div class="sp"></div>
+    <span class="chip hidden" id="branchChip"></span>
+    <button class="gbtn hidden" id="refreshBtn">רענון</button>
+    <button class="gbtn hidden" id="logoutBtn">יציאה</button>
+  </div>
+</header>
+<div class="stripe"></div>
+
+<!-- =====================================================================
+     אפליקציית שוחר
+     ===================================================================== -->
+<div id="cadetApp">
+<main>
+
+  <!-- כניסה -->
+  <section class="view on" id="v-login">
+    <div class="card pad">
+      <div class="kicker">הטבת שוחרים</div>
+      <h1 class="title">אימות זכאות להטבה</h1>
+      <p class="lead">יש להזין מספר אישי או מספר תעודת זהות לבדיקת הזכאות.</p>
+      <div class="offer"><div class="pct">20%</div><div><b>הנחה על כל משקה ברשת <span class="nb">B FRESH</span></b><br>בלבישת מדים ובהצגת אישור הזכאות למוכר</div></div>
+
+      <form id="idForm" autocomplete="off">
+        <label class="lbl" for="idInput">מספר אישי או תעודת זהות</label>
+        <input class="inp" id="idInput" inputmode="numeric" autocapitalize="characters" spellcheck="false" maxlength="12" placeholder="הזנת מספר">
+        <button class="btn pri block" id="idBtn" type="submit" style="margin-top:12px">אימות זכאות</button>
+        <div class="err" id="idErr"></div>
+      </form>
+
+      <form id="pwForm" class="hidden" autocomplete="off">
+        <label class="lbl" for="pwInput">סיסמת מנהל</label>
+        <input class="inp" id="pwInput" type="password" autocomplete="current-password" placeholder="הזנת סיסמה">
+        <button class="btn navy block" id="pwBtn" type="submit" style="margin-top:12px">כניסה לממשק הניהול</button>
+        <div class="err" id="pwErr"></div>
+        <button type="button" class="link" id="pwCancel">חזרה לאימות שוחר</button>
+      </form>
+
+      <div class="login-foot"><span>שלוחת חיל האוויר אשדוד</span><button type="button" class="link" id="adminLink">כניסת מנהל</button></div>
+    </div>
+  </section>
+
+  <!-- פעיל -->
+  <section class="view" id="v-active">
+    <div class="card status-card">
+      <div class="band ok">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg>
+        <div><div class="h">זכאי להטבה</div><div class="s"><span class="live"><i></i>סטטוס פעיל · אישור בזמן אמת</span></div></div>
+      </div>
+      <div class="who"><div class="nm" id="aName"></div><div class="cl" id="aClass"></div></div>
+      <div class="bday hidden" id="aBday"></div>
+      <div class="facts3">
+        <div><span>תאריך</span><b class="ltr" id="aDate"></b></div>
+        <div><span>שעה</span><b class="ltr" id="aTime"></b></div>
+        <div><span>סניף</span><b id="aBranch"></b></div>
+      </div>
+      <div class="terms"><div class="pct">20%</div><p>הנך זכאי להנחה ברשת <span class="nb">B-FRESH</span> בלבישת מדים בלבד</p></div>
+      <div class="raffle hidden" id="aRaffle"></div>
+      <div class="card-acts"><button class="btn pri block" id="redeemBtn">מימוש ההטבה מול המוכר</button></div>
+    </div>
+  </section>
+
+  <!-- מושעה -->
+  <section class="view" id="v-suspended">
+    <div class="card status-card">
+      <div class="band bad">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
+        <div><div class="h">מושעה</div><div class="s">הזכאות להטבה אינה פעילה</div></div>
+      </div>
+      <div class="who"><div class="nm" id="sName"></div></div>
+      <div class="msg">הושעה פעילות, יש לפנות למפקד השלוחה.</div>
+      <div class="card-acts" style="padding-top:0"><button class="btn lite block" data-home>חזרה למסך הראשי</button></div>
+    </div>
+  </section>
+
+  <!-- לא רשום -->
+  <section class="view" id="v-unreg">
+    <div class="card status-card">
+      <div class="band gray">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 7.5v5.5M12 16.5h.01"/></svg>
+        <div><div class="h">לא רשום</div><div class="s">המספר שהוזן לא נמצא</div></div>
+      </div>
+      <div class="msg">משתמש לא רשום במערכת<small>יש לוודא שהמספר הוזן נכון. אם הבעיה נמשכת, יש לפנות לצוות השלוחה.</small></div>
+      <div class="card-acts" style="padding-top:0"><button class="btn lite block" data-home>חזרה למסך הראשי</button></div>
+    </div>
+  </section>
+
+  <!-- מוכר -->
+  <section class="view" id="v-seller">
+    <div class="card pad">
+      <div class="kicker">אישור מוכר</div>
+      <h1 class="title">הזנת קוד מוכר</h1>
+      <p class="lead" id="sellerWho"></p>
+      <div class="branches" id="branches"></div>
+      <div class="pin" id="pin"></div>
+      <div class="keypad" id="keypad"></div>
+      <div class="err" id="sellerErr" style="text-align:center"></div>
+      <button class="btn lite block" id="backBtn" style="margin-top:8px">חזרה</button>
+    </div>
+  </section>
+
+  <!-- אושר -->
+  <section class="view" id="v-done">
+    <div class="card status-card">
+      <div class="band ok">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg>
+        <div><div class="h">המימוש אושר</div><div class="s">ההנחה נרשמה במערכת</div></div>
+      </div>
+      <div class="who"><div class="nm" id="dName"></div></div>
+      <div class="facts3" id="dFacts"></div>
+      <div class="raffle hidden" id="dRaffle"></div>
+      <div class="card-acts"><button class="btn lite block" data-home>סיום</button></div>
+    </div>
+  </section>
+
+  <!-- פג תוקף -->
+  <section class="view" id="v-expired">
+    <div class="card status-card">
+      <div class="band gray">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/></svg>
+        <div><div class="h" id="eTitle">תוקף האישור הסתיים</div><div class="s">יש לבצע אימות מחדש</div></div>
+      </div>
+      <div class="msg" id="eText"></div>
+      <div class="card-acts" style="padding-top:0"><button class="btn pri block" data-home>אימות מחדש</button></div>
+    </div>
+  </section>
+
+  <div class="site-foot">שלוחת חיל האוויר אשדוד × B FRESH</div>
+</main>
+<div class="timer" id="timer"><div class="prog" id="prog"></div><div class="in"><span class="l">תוקף האישור</span><span class="v" id="tt">10:00</span></div></div>
+</div>
+
+<!-- =====================================================================
+     ממשק ניהול
+     ===================================================================== -->
+<div id="adminApp" class="hidden">
+  <nav class="tabs"><div class="in" id="tabs">
+    <button data-t="stats" class="on">סטטיסטיקות</button>
+    <button data-t="raffle">הגרלה</button>
+    <button data-t="students">תלמידים</button>
+    <button data-t="import">ייבוא מאקסל</button>
+    <button data-t="settings">הגדרות וקישורים</button>
+  </div></nav>
+
+  <div class="wrap">
+    <!-- סטטיסטיקות -->
+    <div class="tab" id="t-stats">
+      <div class="ph">
+        <div><h2>סטטיסטיקות</h2><p>מימושים לפי שוחר, כיתה, יום, שעה וסניף</p></div>
+        <div class="toolbar" style="margin:0">
+          <div class="seg" id="range"><button data-r="today">היום</button><button data-r="7">7 ימים</button><button data-r="30">30 ימים</button><button data-r="month">החודש</button><button data-r="all" class="on">הכל</button></div>
+          <select id="statBranch"></select>
+          <button class="btn lite" id="exportBtn">ייצוא לאקסל</button>
+        </div>
+      </div>
+      <div class="kpis" id="kpis"></div>
+      <div class="g3">
+        <div class="box"><h3>לפי יום בשבוע</h3><div class="vbars" id="byWeekday"></div></div>
+        <div class="box"><h3>לפי סניף</h3><div id="byBranch"></div></div>
+      </div>
+      <div class="g2" style="margin-top:14px">
+        <div class="box"><h3>לפי כיתה <small>כוסות · שוחרים שמימשו</small></h3><div class="hbars" id="byClass"></div></div>
+        <div class="box"><h3>שוחרים מובילים</h3><div class="hbars" id="byCadet"></div></div>
+      </div>
+      <div class="g2" style="margin-top:14px">
+        <div class="box"><h3>מגמה יומית</h3><div class="vbars thin" id="byDay" style="height:130px"></div></div>
+        <div class="box"><h3>לפי שעה</h3><div class="vbars thin" id="byHour" style="height:130px"></div></div>
+      </div>
+      <div class="box" style="margin-top:14px"><h3>מימושים אחרונים</h3>
+        <div class="tbl" style="max-height:340px"><table><thead><tr><th>תאריך</th><th>שעה</th><th>שוחר</th><th>כיתה</th><th>סניף</th></tr></thead><tbody id="recent"></tbody></table></div>
+      </div>
+    </div>
+
+    <!-- הגרלה -->
+    <div class="tab hidden" id="t-raffle">
+      <div class="ph"><div><h2>הגרלה</h2><p>בחירת זוכים מבין השוחרים שרכשו לפחות X כוסות בתקופה שנבחרה</p></div></div>
+      <div class="box">
+        <div class="form-grid">
+          <label class="f">תקופה<select id="rMode"><option value="month">החודש הנוכחי</option><option value="lastmonth">החודש הקודם</option><option value="rolling30">30 הימים האחרונים</option><option value="custom">טווח תאריכים</option></select></label>
+          <label class="f">מתאריך<input type="date" id="rFrom"></label>
+          <label class="f">עד תאריך<input type="date" id="rTo"></label>
+          <label class="f">מינימום כוסות<input type="number" id="rMin" min="1" value="3"></label>
+          <label class="f">מספר זוכים<input type="number" id="rWin" min="1" value="1"></label>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:18px;align-items:center;margin-top:14px">
+          <label class="chk"><input type="checkbox" id="rWeighted"> כל כוס מעל המינימום = כרטיס נוסף</label>
+          <label class="chk"><input type="checkbox" id="rExclude"> בלי זוכים קודמים מאותה תקופה</label>
+          <button class="btn gold" id="drawBtn" style="margin-inline-start:auto">ביצוע הגרלה</button>
+        </div>
+        <div class="stage" id="stage"><div class="eb">הגרלה</div><div class="roll" id="roll">מוכנים</div><div class="sub" id="rollSub"></div></div>
+      </div>
+      <div class="g2" style="margin-top:14px">
+        <div class="box"><h3>משתתפים <small id="eligCount"></small></h3>
+          <div class="tbl" style="max-height:380px"><table><thead><tr><th>שוחר</th><th>כיתה</th><th>כוסות</th><th>כרטיסים</th></tr></thead><tbody id="eligBody"></tbody></table></div></div>
+        <div class="box"><h3>קרובים להגרלה <small>חסרה כוס אחת</small></h3>
+          <div class="tbl" style="max-height:380px"><table><thead><tr><th>שוחר</th><th>כיתה</th><th>כוסות</th></tr></thead><tbody id="nearBody"></tbody></table></div></div>
+      </div>
+      <div class="box" style="margin-top:14px"><h3>היסטוריית הגרלות</h3>
+        <div class="tbl" style="max-height:340px"><table><thead><tr><th>בוצעה</th><th>תקופה</th><th>מינימום</th><th>משתתפים</th><th>זוכים</th></tr></thead><tbody id="histBody"></tbody></table></div></div>
+    </div>
+
+    <!-- תלמידים -->
+    <div class="tab hidden" id="t-students">
+      <div class="ph"><div><h2>תלמידים</h2><p>הוספה, עריכה, השעיה והחזרה לפעילות</p></div><button class="btn navy" id="addBtn">הוספת תלמיד</button></div>
+      <div class="toolbar">
+        <input type="search" id="q" placeholder="חיפוש לפי שם, ת.ז או מספר אישי">
+        <select id="fClass"></select>
+        <select id="fStatus"><option value="">כל הסטטוסים</option><option value="1">פעילים</option><option value="0">מושעים</option></select>
+        <span class="count" id="sCount"></span>
+      </div>
+      <div class="tbl"><table>
+        <thead><tr><th data-s="name">שם</th><th data-s="class_name">כיתה</th><th data-s="tz">ת.ז</th><th data-s="personal_number">מספר אישי</th><th data-s="birth_date">תאריך לידה</th><th data-s="buys">רכישות</th><th data-s="raffle">להגרלה</th><th data-s="active">סטטוס</th><th></th></tr></thead>
+        <tbody id="sBody"></tbody>
+      </table></div>
+    </div>
+
+    <!-- ייבוא -->
+    <div class="tab hidden" id="t-import">
+      <div class="ph"><div><h2>ייבוא מאקסל</h2><p>תלמיד קיים (לפי ת.ז או מספר אישי) מתעדכן, תלמיד חדש מתווסף. שורת כותרות מדולגת אוטומטית.</p></div></div>
+      <div class="cols"><div><b>A</b>שם פרטי</div><div><b>B</b>שם משפחה</div><div><b>C</b>כיתה</div><div><b>D</b>תעודת זהות</div><div><b>E</b>מספר אישי</div><div><b>F</b>שלוחה</div><div><b>G</b>תאריך לידה</div></div>
+      <label class="drop" id="drop"><b>גרירת קובץ אקסל לכאן, או לחיצה לבחירה</b><small>xlsx · xls · csv</small><input type="file" id="file" accept=".xlsx,.xls,.csv" hidden></label>
+      <div id="preview"></div>
+    </div>
+
+    <!-- הגדרות -->
+    <div class="tab hidden" id="t-settings">
+      <div class="ph"><div><h2>הגדרות וקישורים</h2><p>קוד מוכר, חלון אישור, הגרלה, סניפים וסיסמת מנהל</p></div></div>
+      <form id="setForm">
+        <div class="box"><h3>מימוש</h3>
+          <div class="form-grid">
+            <label class="f">קוד מוכר<input class="code-in" id="sCode" inputmode="numeric" maxlength="8" required><small>4 עד 8 ספרות, מוזן על ידי המוכר</small></label>
+            <label class="f">תוקף האישור בדקות<input id="sMin" type="number" min="1" max="120" required><small>מרגע האימות ועד שהאישור פג</small></label>
+          </div>
+        </div>
+        <div class="box" style="margin-top:14px"><h3>ההגרלה הקרובה <small>מוצג לשוחר במסך האישור</small></h3>
+          <label class="chk" style="margin-bottom:14px"><input type="checkbox" id="sREnabled"> הצגת ההתקדמות להגרלה לשוחרים</label>
+          <div class="form-grid">
+            <label class="f">מינימום כוסות<input id="sRMin" type="number" min="1" max="100" required></label>
+            <label class="f">תקופת הספירה<select id="sRMode"><option value="month">חודש קלנדרי</option><option value="rolling30">30 הימים האחרונים</option><option value="custom">טווח תאריכים קבוע</option></select></label>
+            <label class="f">מתאריך<input id="sRFrom" type="date"></label>
+            <label class="f">עד תאריך<input id="sRTo" type="date"></label>
+          </div>
+        </div>
+        <div class="box" style="margin-top:14px"><h3>סניפים וקישורים <small>כניסה דרך קישור הסניף מזהה אותו אוטומטית</small></h3><div class="links" id="links"></div></div>
+        <div style="margin-top:16px"><button class="btn navy" type="submit">שמירת הגדרות</button></div>
+      </form>
+      <form id="pwChange" class="box" style="margin-top:22px">
+        <h3>החלפת סיסמת מנהל</h3>
+        <div class="form-grid">
+          <label class="f">סיסמה נוכחית<input type="password" id="pOld" required autocomplete="current-password"></label>
+          <label class="f">סיסמה חדשה<input type="password" id="pNew" required minlength="4" autocomplete="new-password"></label>
+          <label class="f">אימות סיסמה חדשה<input type="password" id="pNew2" required minlength="4" autocomplete="new-password"></label>
+        </div>
+        <div style="margin-top:14px"><button class="btn lite" type="submit">החלפת סיסמה</button></div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal hidden" id="modal">
+  <form class="m" id="cForm">
+    <h3 id="mTitle">הוספת תלמיד</h3>
+    <div class="form-grid">
+      <label class="f">שם פרטי<input id="fFirst" required></label>
+      <label class="f">שם משפחה<input id="fLast"></label>
+      <label class="f">כיתה<input id="fCls" list="clsList" placeholder="לדוגמה ט2"></label>
+      <label class="f">שלוחה<input id="fUnit"></label>
+      <label class="f">תעודת זהות<input id="fTz" inputmode="numeric"></label>
+      <label class="f">מספר אישי<input id="fPn" inputmode="numeric"></label>
+      <label class="f">תאריך לידה<input id="fBd" type="date"></label>
+      <label class="f">סטטוס<select id="fActive"><option value="1">פעיל</option><option value="0">מושעה</option></select></label>
+    </div>
+    <datalist id="clsList"></datalist>
+    <div class="acts">
+      <button class="btn navy" type="submit">שמירה</button>
+      <button class="btn lite" type="button" id="mCancel">ביטול</button>
+      <button class="btn red" type="button" id="mDelete" style="margin-inline-start:auto">מחיקה</button>
+    </div>
+  </form>
+</div>
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+/* =====================================================================
+   הגדרות חיבור: להדביק כאן מ Supabase > Project Settings > API
+   ===================================================================== */
+const SUPABASE_URL      = 'https://YOUR_PROJECT_ID.supabase.co';
+const SUPABASE_ANON_KEY = 'YOUR_ANON_PUBLIC_KEY';
+
+(() => {
+  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const ss = {
+    get(k){ try { return JSON.parse(sessionStorage.getItem(k)); } catch { return null; } },
+    set(k,v){ try { sessionStorage.setItem(k, JSON.stringify(v)); } catch {} },
+    del(k){ try { sessionStorage.removeItem(k); } catch {} }
+  };
+  function toast(msg, bad){
+    const t = $('toast'); t.textContent = msg; t.classList.toggle('bad', !!bad); t.classList.add('on');
+    clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('on'), 2800);
+  }
+  function busy(btn, on, label){ btn.disabled = on; btn.innerHTML = on ? '<span class="spin"></span>' : label; }
+
+  const TZ = 'Asia/Jerusalem';
+  const fDay  = new Intl.DateTimeFormat('en-CA', {timeZone:TZ, year:'numeric', month:'2-digit', day:'2-digit'});
+  const fWd   = new Intl.DateTimeFormat('en-US', {timeZone:TZ, weekday:'short'});
+  const fHour = new Intl.DateTimeFormat('en-US', {timeZone:TZ, hour:'numeric', hourCycle:'h23'});
+  const fTime = new Intl.DateTimeFormat('he-IL', {timeZone:TZ, hour:'2-digit', minute:'2-digit', hourCycle:'h23'});
+  const fSec  = new Intl.DateTimeFormat('he-IL', {timeZone:TZ, hour:'2-digit', minute:'2-digit', second:'2-digit', hourCycle:'h23'});
+  const dayKey = (d) => fDay.format(d);
+  const todayKey = () => dayKey(new Date());
+  const fmtDate = (k) => k ? k.split('-').reverse().join('/') : '';
+  const addDays = (k, n) => new Date(Date.parse(k + 'T12:00:00Z') + n * 864e5).toISOString().slice(0, 10);
+  const monthEnd = (k) => new Date(Date.UTC(+k.slice(0, 4), +k.slice(5, 7), 0)).toISOString().slice(0, 10);
+  const HE_MONTHS = ['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];
+  const cups = (n) => n === 1 ? 'כוס אחת' : `${n} כוסות`;
+
+  // סניף מהקישור: ?b=1
+  const URL_BRANCH = (() => { const n = Number(new URLSearchParams(location.search).get('b')); return Number.isInteger(n) && n > 0 ? n : null; })();
+  let branches = [];
+  const branchName = (id) => branches.find(b => b.id === id)?.name || '';
+
+  async function loadBranches(){
+    try { const { data } = await sb.from('branches').select('id,name').order('id'); if (data && data.length) branches = data; } catch {}
+    if (!branches.length) branches = [{id:1,name:'סניף 1'},{id:2,name:'סניף 2'}];
+  }
+
+  /* ===================================================================
+     שוחר
+     =================================================================== */
+  const KEY = 'bf_cadet_v3';
+  let S = null, branch = null, pin = '', tick = null;
+
+  const ERR = {
+    invalid_session: 'האישור לא נמצא. יש לבצע אימות מחדש.',
+    already_redeemed: 'ההטבה כבר מומשה באישור הזה.',
+    expired: 'תוקף האישור הסתיים.',
+    locked: 'יותר מדי ניסיונות שגויים. יש לבצע אימות מחדש.',
+    bad_branch: 'יש לבחור סניף.',
+    suspended: 'הושעה פעילות, יש לפנות למפקד השלוחה.',
+    wrong_code: 'קוד שגוי.',
+    network: 'בעיית תקשורת. יש לבדוק חיבור לאינטרנט ולנסות שוב.'
+  };
+
+  function show(id){
+    document.querySelectorAll('#cadetApp .view').forEach(v => v.classList.toggle('on', v.id === id));
+    $('timer').classList.toggle('on', !!(S && !S.redeemed && (id === 'v-active' || id === 'v-seller')));
+    window.scrollTo(0, 0);
+  }
+  function renderBranchChip(){
+    const fixed = URL_BRANCH && branches.some(b => b.id === URL_BRANCH);
+    if (fixed){ branch = URL_BRANCH; $('branchChip').textContent = branchName(branch); $('branchChip').classList.remove('hidden'); }
+  }
+  const now = () => Date.now() + (S ? S.offset : 0);
+  const remaining = () => S ? Math.max(0, Date.parse(S.expires_at) - now()) : 0;
+
+  function startTick(){
+    clearInterval(tick);
+    const step = () => {
+      const r = remaining(), s = Math.ceil(r / 1000), d = new Date(now());
+      $('tt').textContent = String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
+      $('prog').style.width = (r / S.total * 100) + '%';
+      $('timer').classList.toggle('low', r < 60000);
+      $('aTime').textContent = fSec.format(d);
+      $('aDate').textContent = fmtDate(dayKey(d));
+      if (r <= 0){ clearInterval(tick); expire(); }
+    };
+    step(); tick = setInterval(step, 1000);
+  }
+  function expire(msg){
+    if (S && S.redeemed) return;
+    S = null; ss.del(KEY); clearInterval(tick);
+    $('eTitle').textContent = msg ? 'לא ניתן להשלים את המימוש' : 'תוקף האישור הסתיים';
+    $('eText').textContent = msg || 'אישור הזכאות תקף לזמן מוגבל מרגע האימות. ניתן לבצע אימות מחדש ולקבל אישור חדש.';
+    show('v-expired');
+  }
+
+  function raffleHtml(r){
+    if (!r || !r.enabled || r.state !== 'active' || !r.threshold) return '';
+    const full = r.count >= r.threshold, shown = Math.min(r.count, r.threshold), left = r.threshold - r.count;
+    const dm = (iso) => iso.slice(8) + '/' + iso.slice(5, 7);
+    const period = r.mode === 'month' ? `ספירה לחודש ${HE_MONTHS[+r.from.slice(5, 7) - 1]}` : r.mode === 'rolling30' ? 'ספירה ל 30 הימים האחרונים' : `ספירה בין ${dm(r.from)} ל ${dm(r.to)}`;
+    const meter = r.threshold <= 15
+      ? `<div class="segs${full ? ' full' : ''}">${Array.from({length: r.threshold}, (_, i) => `<i class="${i < shown ? 'f' : ''}"></i>`).join('')}</div>`
+      : `<div class="segs${full ? ' full' : ''}"><i class="f" style="flex:${shown}"></i><i style="flex:${r.threshold - shown}"></i></div>`;
+    return `<div class="top"><span>הגרלה קרובה</span><span><b>${r.count}</b> מתוך ${r.threshold}</span></div>${meter}
+      <div class="t${full ? ' in' : ''}">${full ? 'הנך משתתף בהגרלה הקרובה' : `עוד ${cups(left)} כדי להיכנס להגרלה הקרובה`}</div>
+      <div class="s">${period}</div>`;
+  }
+  function setRaffle(el, r){ const h = raffleHtml(r); el.innerHTML = h; el.classList.toggle('hidden', !h); }
+
+  function renderActive(){
+    $('aName').textContent = `${S.first_name} ${S.last_name || ''}`.trim();
+    $('aClass').textContent = S.class_name ? `כיתה ${S.class_name}` : '';
+    $('aBday').classList.toggle('hidden', !S.is_birthday);
+    $('aBday').textContent = `יום הולדת שמח, ${S.first_name}! צוות השלוחה מאחל מזל טוב.`;
+    $('aBranch').textContent = branch ? branchName(branch) : 'ייבחר במימוש';
+    setRaffle($('aRaffle'), S.raffle);
+    show('v-active'); startTick();
+  }
+
+  // כניסה (שוחר / מנהל)
+  $('idForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const raw = $('idInput').value.trim();
+    $('idErr').textContent = '';
+    if (raw.toUpperCase() === 'ADMIN'){
+      $('idForm').classList.add('hidden'); $('pwForm').classList.remove('hidden'); $('adminLink').classList.add('hidden');
+      $('pwInput').value = ''; $('pwErr').textContent = ''; setTimeout(() => $('pwInput').focus(), 50);
+      return;
+    }
+    const id = raw.replace(/\D/g, '');
+    if (id.length < 5){ $('idErr').textContent = 'יש להזין מספר אישי או תעודת זהות.'; return; }
+    busy($('idBtn'), true);
+    try {
+      const { data, error } = await sb.rpc('cadet_login', { p_identifier: id });
+      if (error) throw error;
+      $('idInput').value = '';
+      if (data.status === 'active'){
+        S = { ...data, offset: Date.parse(data.server_now) - Date.now(), total: Date.parse(data.expires_at) - Date.parse(data.server_now), redeemed: false };
+        ss.set(KEY, S); renderActive();
+      } else if (data.status === 'suspended'){
+        $('sName').textContent = `${data.first_name || ''} ${data.last_name || ''}`.trim();
+        show('v-suspended');
+      } else show('v-unreg');
+    } catch (err){ console.error(err); $('idErr').textContent = ERR.network; }
+    finally { busy($('idBtn'), false, 'אימות זכאות'); }
+  });
+  $('adminLink').addEventListener('click', () => {
+    $('idInput').setAttribute('inputmode', 'text'); $('idInput').value = ''; $('idInput').placeholder = 'ADMIN'; $('idInput').focus();
+  });
+  $('pwCancel').addEventListener('click', () => {
+    $('pwForm').classList.add('hidden'); $('idForm').classList.remove('hidden'); $('adminLink').classList.remove('hidden');
+    $('idInput').setAttribute('inputmode', 'numeric'); $('idInput').placeholder = 'הזנת מספר'; $('idInput').value = '';
+  });
+  $('pwForm').addEventListener('submit', async (e) => {
+    e.preventDefault(); $('pwErr').textContent = '';
+    busy($('pwBtn'), true);
+    try {
+      const { data, error } = await sb.rpc('admin_login', { p_password: $('pwInput').value });
+      if (error) throw error;
+      if (!data.ok){ $('pwErr').textContent = data.error === 'locked' ? 'יותר מדי ניסיונות שגויים. יש לנסות שוב בעוד 10 דקות.' : 'סיסמה שגויה'; return; }
+      ss.set('bf_admin', data.token); $('pwInput').value = '';
+      Admin.enter(data.token);
+    } catch (err){ console.error(err); $('pwErr').textContent = ERR.network; }
+    finally { busy($('pwBtn'), false, 'כניסה לממשק הניהול'); }
+  });
+
+  // מסך מוכר
+  function renderBranches(){
+    const fixed = URL_BRANCH && branch === URL_BRANCH;
+    $('branches').innerHTML = fixed
+      ? `<div class="fixedb"><span>סניף</span><b>${esc(branchName(branch))}</b></div>`
+      : branches.map(b => `<button type="button" data-id="${b.id}" class="${b.id === branch ? 'sel' : ''}">${esc(b.name)}</button>`).join('');
+  }
+  $('branches').addEventListener('click', (e) => {
+    const b = e.target.closest('button[data-id]'); if (!b) return;
+    branch = Number(b.dataset.id); $('sellerErr').textContent = ''; renderBranches(); $('aBranch').textContent = branchName(branch);
+  });
+  function renderPin(){ $('pin').innerHTML = Array.from({length: Math.max(4, pin.length)}, (_, i) => `<span class="${i < pin.length ? 'f' : ''}"></span>`).join(''); }
+  $('keypad').innerHTML = ['1','2','3','4','5','6','7','8','9','del','0','ok'].map(k =>
+    k === 'del' ? '<button type="button" data-k="del" aria-label="מחיקה"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M9 5h11v14H9l-6-7z"/><path d="M12.5 9.5l5 5M17.5 9.5l-5 5"/></svg></button>'
+  : k === 'ok'  ? '<button type="button" class="ok" data-k="ok" aria-label="אישור"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button>'
+  : `<button type="button" data-k="${k}">${k}</button>`).join('');
+  $('keypad').addEventListener('click', (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+    const k = b.dataset.k; $('sellerErr').textContent = '';
+    if (k === 'del') pin = pin.slice(0, -1); else if (k === 'ok') return submitCode(); else if (pin.length < 8) pin += k;
+    renderPin();
+  });
+  let submitting = false;
+  async function submitCode(){
+    if (submitting) return;
+    if (!branch){ $('sellerErr').textContent = 'יש לבחור סניף.'; return; }
+    if (pin.length < 4){ $('sellerErr').textContent = 'יש להזין קוד מוכר.'; return; }
+    submitting = true;
+    try {
+      const { data, error } = await sb.rpc('redeem', { p_session: S.session_id, p_code: pin, p_branch: branch });
+      if (error) throw error;
+      if (!data.ok){
+        pin = ''; renderPin();
+        $('pin').classList.remove('shake'); void $('pin').offsetWidth; $('pin').classList.add('shake');
+        let msg = ERR[data.error] || 'שגיאה';
+        if (data.error === 'wrong_code' && data.attempts_left !== undefined) msg += ` נותרו ${data.attempts_left} ניסיונות.`;
+        $('sellerErr').textContent = msg;
+        if (['expired','already_redeemed','locked','invalid_session','suspended'].includes(data.error)) setTimeout(() => expire(ERR[data.error]), 1600);
+        return;
+      }
+      S.redeemed = true; clearInterval(tick); ss.del(KEY);
+      const d = new Date(data.redeemed_at);
+      $('dName').textContent = `${S.first_name} ${S.last_name || ''}`.trim();
+      $('dFacts').innerHTML = `<div><span>תאריך</span><b class="ltr">${fmtDate(dayKey(d))}</b></div><div><span>שעה</span><b class="ltr">${fTime.format(d)}</b></div><div><span>סניף</span><b>${esc(data.branch_name || '')}</b></div>`;
+      setRaffle($('dRaffle'), data.raffle);
+      show('v-done');
+      if (navigator.vibrate) navigator.vibrate(80);
+    } catch (err){ console.error(err); $('sellerErr').textContent = ERR.network; }
+    finally { submitting = false; }
+  }
+  $('redeemBtn').addEventListener('click', () => {
+    if (!S || remaining() <= 0) return expire();
+    pin = ''; renderPin(); $('sellerErr').textContent = '';
+    $('sellerWho').textContent = `${S.first_name} ${S.last_name || ''}`.trim() + (S.class_name ? ` · כיתה ${S.class_name}` : '') + ' · יש למסור את הטלפון לנציג הסניף';
+    renderBranches(); show('v-seller');
+  });
+  $('backBtn').addEventListener('click', () => show('v-active'));
+  document.querySelectorAll('[data-home]').forEach(b => b.addEventListener('click', () => {
+    S = null; ss.del(KEY); clearInterval(tick); show('v-login'); setTimeout(() => $('idInput').focus(), 80);
+  }));
+
+  /* ===================================================================
+     מנהל
+     =================================================================== */
+  const Admin = (() => {
+    let token = null, cadets = [], purchases = [], settings = {}, raffles = [];
+    let range = 'all', sortKey = 'class_name', sortDir = 1, editing = null, pending = null, raffleInit = false, drawing = false;
+    const WD = {Sun:0, Mon:1, Tue:2, Wed:3, Thu:4, Fri:5, Sat:6};
+    const WD_HE = ['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'];
+    const digits = (v) => String(v ?? '').replace(/\D/g, '');
+    const normTz = (v) => { const d = digits(v); return d ? (d.length < 9 ? d.padStart(9, '0') : d) : null; };
+    const normPn = (v) => digits(v) || null;
+    const fullName = (c) => `${c.first_name || ''} ${c.last_name || ''}`.trim();
+    const pKey = (p) => p._k || (p._k = dayKey(new Date(p.created_at)));
+    const isBirthday = (bd) => !!bd && bd.slice(5) === todayKey().slice(5);
+    const GRADE = {'ז':7,'ח':8,'ט':9,'י':10,'יא':11,'יב':12};
+    const classKey = (c) => { const m = String(c || '').trim().match(/^([א-ת]+)['"׳״]?\s*(\d*)/); return m ? [GRADE[m[1]] ?? 50, Number(m[2] || 0), m[1]] : [99, 0, String(c || '')]; };
+    const classCmp = (a, b) => { const x = classKey(a), y = classKey(b); return x[0] - y[0] || x[1] - y[1] || String(x[2]).localeCompare(String(y[2]), 'he'); };
+    const loadScript = (src) => new Promise((res, rej) => { if (document.querySelector(`script[src="${src}"]`)) return res(); const s = document.createElement('script'); s.src = src; s.onload = res; s.onerror = rej; document.head.appendChild(s); });
+
+    async function api(fn, args = {}){
+      const { data, error } = await sb.rpc(fn, { p_token: token, ...args });
+      if (error) throw error;
+      if (data && data.error === 'unauthorized'){ logout('פג תוקף ההתחברות. יש להתחבר מחדש.'); throw new Error('unauthorized'); }
+      return data;
+    }
+
+    async function enter(t){
+      token = t;
+      $('cadetApp').classList.add('hidden'); $('adminApp').classList.remove('hidden');
+      $('branchChip').classList.add('hidden'); $('refreshBtn').classList.remove('hidden'); $('logoutBtn').classList.remove('hidden');
+      $('govSub').innerHTML = 'שלוחת אשדוד<span class="ext"> · ממשק ניהול</span>';
+      document.title = 'ממשק ניהול · הטבת שוחרים';
+      Promise.all([
+        loadScript('https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js'),
+        loadScript('https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js')
+      ]).then(() => renderLinks()).catch(() => {});
+      await loadAll();
+    }
+    async function logout(msg){
+      try { if (token) await sb.rpc('admin_logout', { p_token: token }); } catch {}
+      token = null; ss.del('bf_admin');
+      $('adminApp').classList.add('hidden'); $('cadetApp').classList.remove('hidden');
+      $('refreshBtn').classList.add('hidden'); $('logoutBtn').classList.add('hidden');
+      $('govSub').innerHTML = 'שלוחת אשדוד<span class="ext"> · הטבת שוחרים ברשת <span class="nb">B FRESH</span></span>';
+      $('pwCancel').click(); renderBranchChip(); show('v-login');
+      if (msg) $('idErr').textContent = msg;
+    }
+    $('logoutBtn').addEventListener('click', () => logout());
+    $('refreshBtn').addEventListener('click', () => loadAll().then(() => toast('הנתונים עודכנו')));
+
+    async function loadAll(){
+      try {
+        const d = await api('admin_get_data');
+        cadets = d.cadets || []; purchases = d.purchases || []; branches = d.branches || branches; settings = d.settings || {}; raffles = d.raffles || [];
+        renderFilters(); renderStudents(); renderStats(); renderSettings(); initRaffleForm(); renderRaffle(); renderHistory();
+      } catch (err){ if (err.message !== 'unauthorized'){ console.error(err); toast('שגיאה בטעינת נתונים', true); } }
+    }
+
+    $('tabs').addEventListener('click', (e) => {
+      const b = e.target.closest('button'); if (!b) return;
+      document.querySelectorAll('#tabs button').forEach(x => x.classList.toggle('on', x === b));
+      document.querySelectorAll('.tab').forEach(t => t.classList.toggle('hidden', t.id !== 't-' + b.dataset.t));
+    });
+
+    function currentRafflePeriod(){
+      const tk = todayKey();
+      if (settings.raffle_mode === 'custom' && settings.raffle_start && settings.raffle_end) return [settings.raffle_start, settings.raffle_end];
+      if (settings.raffle_mode === 'rolling30') return [addDays(tk, -29), tk];
+      return [tk.slice(0, 8) + '01', monthEnd(tk)];
+    }
+    function countsIn(from, to){ const m = {}; for (const p of purchases) if (p.cadet_id){ const k = pKey(p); if (k >= from && k <= to) m[p.cadet_id] = (m[p.cadet_id] || 0) + 1; } return m; }
+
+    /* ---------- תלמידים ---------- */
+    function renderFilters(){
+      const cls = [...new Set(cadets.map(c => c.class_name).filter(Boolean))].sort(classCmp), cur = $('fClass').value;
+      $('fClass').innerHTML = '<option value="">כל הכיתות</option>' + cls.map(c => `<option${c === cur ? ' selected' : ''}>${esc(c)}</option>`).join('');
+      $('clsList').innerHTML = cls.map(c => `<option value="${esc(c)}">`).join('');
+      const bs = $('statBranch').value;
+      $('statBranch').innerHTML = '<option value="">כל הסניפים</option>' + branches.map(b => `<option value="${b.id}"${String(b.id) === bs ? ' selected' : ''}>${esc(b.name)}</option>`).join('');
+    }
+    function renderStudents(){
+      const q = $('q').value.trim().toLowerCase(), fc = $('fClass').value, fs = $('fStatus').value;
+      const buys = {}; for (const p of purchases) if (p.cadet_id) buys[p.cadet_id] = (buys[p.cadet_id] || 0) + 1;
+      const [rf, rt] = currentRafflePeriod(), rc = countsIn(rf, rt), th = settings.raffle_threshold || 3;
+      const rows = cadets.filter(c => (!fc || c.class_name === fc) && (fs === '' || String(+c.active) === fs) &&
+        (!q || `${fullName(c)} ${c.tz || ''} ${c.personal_number || ''}`.toLowerCase().includes(q)));
+      rows.sort((a, b) => {
+        let r;
+        if (sortKey === 'name') r = fullName(a).localeCompare(fullName(b), 'he');
+        else if (sortKey === 'class_name') r = classCmp(a.class_name, b.class_name) || fullName(a).localeCompare(fullName(b), 'he');
+        else if (sortKey === 'buys') r = (buys[a.id] || 0) - (buys[b.id] || 0);
+        else if (sortKey === 'raffle') r = (rc[a.id] || 0) - (rc[b.id] || 0);
+        else if (sortKey === 'active') r = (+a.active) - (+b.active);
+        else r = String(a[sortKey] || '').localeCompare(String(b[sortKey] || ''));
+        return r * sortDir;
+      });
+      $('sCount').textContent = `${rows.length} מתוך ${cadets.length} · ${cadets.filter(c => !c.active).length} מושעים`;
+      $('sBody').innerHTML = rows.length ? rows.map(c => { const n = rc[c.id] || 0; return `<tr>
+        <td><b>${esc(fullName(c))}</b>${isBirthday(c.birth_date) ? ' <span class="tag gold">יום הולדת היום</span>' : ''}</td>
+        <td>${c.class_name ? `<span class="tag cls">${esc(c.class_name)}</span>` : ''}</td>
+        <td class="num">${esc(c.tz || '')}</td><td class="num">${esc(c.personal_number || '')}</td><td class="num">${fmtDate(c.birth_date)}</td>
+        <td class="num"><b>${buys[c.id] || 0}</b></td>
+        <td>${n >= th ? '<span class="tag gold">בהגרלה</span>' : `<span style="color:var(--muted)">${n} / ${th}</span>`}</td>
+        <td><span class="tag ${c.active ? 'ok' : 'bad'}">${c.active ? 'פעיל' : 'מושעה'}</span></td>
+        <td><button class="btn sm lite" data-edit="${c.id}">עריכה</button> <button class="btn sm ${c.active ? 'red' : 'lite'}" data-toggle="${c.id}">${c.active ? 'השעיה' : 'החזרה לפעילות'}</button></td>
+      </tr>`; }).join('') : '<tr><td colspan="9" class="empty">אין תלמידים להצגה</td></tr>';
+    }
+    ['q','fClass','fStatus'].forEach(id => $(id).addEventListener('input', renderStudents));
+    document.querySelector('#t-students thead').addEventListener('click', (e) => {
+      const th = e.target.closest('th[data-s]'); if (!th) return;
+      if (sortKey === th.dataset.s) sortDir *= -1; else { sortKey = th.dataset.s; sortDir = ['buys','raffle'].includes(sortKey) ? -1 : 1; }
+      renderStudents();
+    });
+    $('sBody').addEventListener('click', async (e) => {
+      const ed = e.target.closest('[data-edit]'); if (ed) return openModal(cadets.find(c => c.id === ed.dataset.edit));
+      const tg = e.target.closest('[data-toggle]'); if (!tg) return;
+      const c = cadets.find(x => x.id === tg.dataset.toggle); if (!c) return;
+      if (c.active && !confirm(`להשעות את ${fullName(c)}? השוחר יקבל הודעת השעיה בכניסה.`)) return;
+      try { const r = await api('admin_set_active', { p_id: c.id, p_active: !c.active }); if (r.ok){ c.active = !c.active; renderStudents(); renderRaffle(); toast(c.active ? 'השוחר הוחזר לפעילות' : 'השוחר הושעה'); } } catch {}
+    });
+    $('addBtn').addEventListener('click', () => openModal(null));
+
+    function openModal(c){
+      editing = c;
+      $('mTitle').textContent = c ? 'עריכת תלמיד' : 'הוספת תלמיד';
+      $('fFirst').value = c?.first_name || ''; $('fLast').value = c?.last_name || '';
+      $('fCls').value = c?.class_name || ''; $('fUnit').value = c?.unit || 'אשדוד';
+      $('fTz').value = c?.tz || ''; $('fPn').value = c?.personal_number || '';
+      $('fBd').value = c?.birth_date || ''; $('fActive').value = c && !c.active ? '0' : '1';
+      $('mDelete').classList.toggle('hidden', !c);
+      $('modal').classList.remove('hidden'); $('fFirst').focus();
+    }
+    const closeModal = () => { $('modal').classList.add('hidden'); editing = null; };
+    $('mCancel').addEventListener('click', closeModal);
+    $('modal').addEventListener('click', (e) => { if (e.target.id === 'modal') closeModal(); });
+    $('cForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const row = { id: editing?.id || null, first_name: $('fFirst').value.trim(), last_name: $('fLast').value.trim(), class_name: $('fCls').value.trim(),
+        unit: $('fUnit').value.trim(), tz: normTz($('fTz').value), personal_number: normPn($('fPn').value), birth_date: $('fBd').value || null, active: $('fActive').value === '1' };
+      if (!row.tz && !row.personal_number){ toast('יש למלא ת.ז או מספר אישי', true); return; }
+      try {
+        const r = await api('admin_upsert_cadets', { p_rows: [row] });
+        if (r.errors && r.errors.length){ toast(r.errors[0].error === 'duplicate' ? 'ת.ז או מספר אישי כבר קיימים אצל תלמיד אחר' : 'שגיאה: ' + r.errors[0].error, true); return; }
+        const saved = r.rows[0];
+        if (editing) cadets = cadets.map(c => c.id === saved.id ? saved : c); else cadets.push(saved);
+        closeModal(); renderFilters(); renderStudents(); renderRaffle(); toast('נשמר');
+      } catch {}
+    });
+    $('mDelete').addEventListener('click', async () => {
+      if (!editing || !confirm(`למחוק את ${fullName(editing)}? היסטוריית הרכישות תישאר בסטטיסטיקה.`)) return;
+      try {
+        await api('admin_delete_cadet', { p_id: editing.id });
+        const id = editing.id; cadets = cadets.filter(c => c.id !== id); purchases.forEach(p => { if (p.cadet_id === id) p.cadet_id = null; });
+        closeModal(); renderFilters(); renderStudents(); renderRaffle(); toast('התלמיד נמחק');
+      } catch {}
+    });
+
+    /* ---------- סטטיסטיקות ---------- */
+    $('range').addEventListener('click', (e) => {
+      const b = e.target.closest('button'); if (!b) return; range = b.dataset.r;
+      document.querySelectorAll('#range button').forEach(x => x.classList.toggle('on', x === b)); renderStats();
+    });
+    $('statBranch').addEventListener('change', renderStats);
+    function filtered(){
+      const tk = todayKey(), br = $('statBranch').value;
+      const from = range === 'today' ? tk : range === '7' ? addDays(tk, -6) : range === '30' ? addDays(tk, -29) : range === 'month' ? tk.slice(0, 8) + '01' : '';
+      return purchases.filter(p => (!br || String(p.branch_id) === br) && (!from || pKey(p) >= from));
+    }
+    function vbars(el, labels, values){
+      const max = Math.max(1, ...values);
+      el.innerHTML = labels.map((l, i) => `<div class="c" title="${esc(l)}: ${values[i]}"><div class="b" style="height:${values[i] / max * 100}%"><span>${values[i] || ''}</span></div><div class="x">${esc(l)}</div></div>`).join('');
+    }
+    function hbars(el, rows){
+      if (!rows.length){ el.innerHTML = '<div class="empty">אין נתונים בטווח</div>'; return; }
+      const max = Math.max(1, ...rows.map(r => r.v));
+      el.innerHTML = rows.map(r => `<div class="r"><div class="lab">${esc(r.l)}${r.s ? `<small>${esc(r.s)}</small>` : ''}</div><div class="tr"><div class="fl" style="width:${r.v / max * 100}%"></div></div><div class="vv">${r.v}</div></div>`).join('');
+    }
+    function renderStats(){
+      const P = filtered(), tk = todayKey();
+      const bName = Object.fromEntries(branches.map(b => [b.id, b.name])), cById = Object.fromEntries(cadets.map(c => [c.id, c]));
+      const days = new Set(P.map(pKey)), uniq = new Set(P.map(p => p.cadet_id || p.cadet_name));
+      const todayN = purchases.filter(p => pKey(p) === tk).length, activeN = cadets.filter(c => c.active).length;
+      const [rf, rt] = currentRafflePeriod(), rc = countsIn(rf, rt), th = settings.raffle_threshold || 3;
+      const inRaffle = Object.entries(rc).filter(([id, n]) => n >= th && cById[id]?.active).length;
+      $('kpis').innerHTML = `
+        <div class="kpi"><div class="l">כוסות בטווח</div><div class="v">${P.length}</div><div class="s">${days.size ? (P.length / days.size).toFixed(1) : 0} בממוצע ליום פעילות</div></div>
+        <div class="kpi"><div class="l">שוחרים שמימשו</div><div class="v">${uniq.size}</div><div class="s">${activeN ? Math.round(uniq.size / activeN * 100) : 0}% מתוך ${activeN} פעילים</div></div>
+        <div class="kpi"><div class="l">מימושים היום</div><div class="v">${todayN}</div><div class="s">${fmtDate(tk)}</div></div>
+        <div class="kpi gold"><div class="l">בהגרלה הקרובה</div><div class="v">${inRaffle}</div><div class="s">${th} כוסות ומעלה · ${fmtDate(rf)} עד ${fmtDate(rt)}</div></div>`;
+      const wd = Array(7).fill(0), hr = Array(24).fill(0);
+      for (const p of P){ const d = new Date(p.created_at); wd[WD[fWd.format(d)]]++; hr[Number(fHour.format(d)) % 24]++; }
+      vbars($('byWeekday'), WD_HE, wd);
+      let h0 = hr.findIndex(v => v > 0), h1 = 23 - [...hr].reverse().findIndex(v => v > 0);
+      if (h0 < 0){ h0 = 7; h1 = 22; } else { h0 = Math.min(h0, 7); h1 = Math.max(h1, 22); }
+      const hl = [], hv = []; for (let h = h0; h <= h1; h++){ hl.push(String(h)); hv.push(hr[h]); }
+      vbars($('byHour'), hl, hv);
+      const bc = {}; for (const p of P) bc[p.branch_id] = (bc[p.branch_id] || 0) + 1;
+      $('byBranch').innerHTML = branches.map(b => { const v = bc[b.id] || 0, pct = P.length ? Math.round(v / P.length * 100) : 0;
+        return `<div class="bt"><div class="row"><span class="nm">${esc(b.name)}</span><span class="v">${v}</span></div><div class="p"><i style="width:${pct}%"></i></div><div class="pc">${pct}% מהמימושים</div></div>`; }).join('');
+      const cc = {}, cu = {};
+      for (const p of P){ const k = p.class_name || 'ללא כיתה'; cc[k] = (cc[k] || 0) + 1; (cu[k] ||= new Set()).add(p.cadet_id || p.cadet_name); }
+      const sizes = {}; for (const c of cadets) if (c.active){ const k = c.class_name || 'ללא כיתה'; sizes[k] = (sizes[k] || 0) + 1; }
+      hbars($('byClass'), Object.keys(cc).sort(classCmp).map(k => ({ l: k, v: cc[k], s: `${cu[k].size} מתוך ${sizes[k] || 0} שוחרים` })));
+      const pc = {};
+      for (const p of P){ const k = p.cadet_id || ('x:' + p.cadet_name); (pc[k] ||= { n: 0, name: p.cadet_name, cls: p.class_name }).n++;
+        const c = cById[p.cadet_id]; if (c){ pc[k].name = fullName(c); pc[k].cls = c.class_name; } }
+      hbars($('byCadet'), Object.values(pc).sort((a, b) => b.n - a.n).slice(0, 10).map(r => ({ l: r.name || 'לא ידוע', s: r.cls || '', v: r.n })));
+      const dc = {}; for (const p of P){ const k = pKey(p); dc[k] = (dc[k] || 0) + 1; }
+      const span = range === 'today' ? 1 : range === '7' ? 7 : 30, dl = [], dv = [];
+      for (let i = span - 1; i >= 0; i--){ const k = addDays(tk, -i); dl.push(k.slice(8) + '/' + k.slice(5, 7)); dv.push(dc[k] || 0); }
+      vbars($('byDay'), dl, dv);
+      const rec = [...P].sort((a, b) => b.id - a.id).slice(0, 50);
+      $('recent').innerHTML = rec.length ? rec.map(p => { const d = new Date(p.created_at), c = cById[p.cadet_id];
+        return `<tr><td class="num">${fmtDate(pKey(p))}</td><td class="num">${fTime.format(d)}</td><td>${esc(c ? fullName(c) : p.cadet_name)}</td><td>${esc(p.class_name || '')}</td><td>${esc(bName[p.branch_id] || '')}</td></tr>`; }).join('')
+        : '<tr><td colspan="5" class="empty">אין מימושים בטווח הזה</td></tr>';
+    }
+    $('exportBtn').addEventListener('click', () => {
+      if (!window.XLSX) return toast('רכיב האקסל עדיין נטען, יש לנסות שוב', true);
+      const P = filtered(), bName = Object.fromEntries(branches.map(b => [b.id, b.name])), cById = Object.fromEntries(cadets.map(c => [c.id, c]));
+      const rows = P.map(p => { const d = new Date(p.created_at), c = cById[p.cadet_id]; return { 'תאריך': fmtDate(pKey(p)), 'שעה': fTime.format(d), 'יום': WD_HE[WD[fWd.format(d)]], 'שוחר': c ? fullName(c) : p.cadet_name, 'כיתה': p.class_name || '', 'סניף': bName[p.branch_id] || '' }; });
+      const byCadet = {}; rows.forEach(r => { const k = r['שוחר'] + '|' + r['כיתה']; (byCadet[k] ||= { 'שוחר': r['שוחר'], 'כיתה': r['כיתה'], 'כוסות': 0 })['כוסות']++; });
+      const byClass = {}; rows.forEach(r => { const k = r['כיתה'] || 'ללא כיתה'; (byClass[k] ||= { 'כיתה': k, 'כוסות': 0 })['כוסות']++; });
+      const wb = XLSX.utils.book_new(); wb.Workbook = { Views: [{ RTL: true }] };
+      XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(rows), 'מימושים');
+      XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(Object.values(byCadet).sort((a, b) => b['כוסות'] - a['כוסות'])), 'לפי שוחר');
+      XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(Object.values(byClass).sort((a, b) => classCmp(a['כיתה'], b['כיתה']))), 'לפי כיתה');
+      XLSX.writeFile(wb, `bfresh_stats_${todayKey()}.xlsx`);
+    });
+
+    /* ---------- הגרלה ---------- */
+    function periodFor(mode){
+      const tk = todayKey();
+      if (mode === 'month') return [tk.slice(0, 8) + '01', monthEnd(tk)];
+      if (mode === 'lastmonth'){ const lm = addDays(tk.slice(0, 8) + '01', -1); return [lm.slice(0, 8) + '01', lm]; }
+      if (mode === 'rolling30') return [addDays(tk, -29), tk];
+      return [$('rFrom').value, $('rTo').value];
+    }
+    function initRaffleForm(){
+      if (raffleInit) return; raffleInit = true;
+      $('rMin').value = settings.raffle_threshold || 3;
+      $('rMode').value = settings.raffle_mode === 'custom' ? 'custom' : settings.raffle_mode === 'rolling30' ? 'rolling30' : 'month';
+      const [f, t] = currentRafflePeriod(); $('rFrom').value = f; $('rTo').value = t;
+    }
+    $('rMode').addEventListener('change', () => { if ($('rMode').value !== 'custom'){ const [f, t] = periodFor($('rMode').value); $('rFrom').value = f; $('rTo').value = t; } renderRaffle(); });
+    ['rFrom','rTo'].forEach(id => $(id).addEventListener('change', () => { $('rMode').value = 'custom'; renderRaffle(); }));
+    ['rMin','rWeighted','rExclude'].forEach(id => $(id).addEventListener('input', renderRaffle));
+    function pool(){
+      const from = $('rFrom').value, to = $('rTo').value, min = Math.max(1, Number($('rMin').value) || 1), weighted = $('rWeighted').checked;
+      if (!from || !to || from > to) return { from, to, min, elig: [], near: [], bad: true };
+      const counts = countsIn(from, to), prev = new Set();
+      if ($('rExclude').checked) raffles.filter(r => r.period_start <= to && r.period_end >= from).forEach(r => (r.winners || []).forEach(w => prev.add(w.id)));
+      const elig = [], near = [];
+      for (const c of cadets){
+        if (!c.active) continue;
+        const n = counts[c.id] || 0;
+        if (n >= min && !prev.has(c.id)) elig.push({ id: c.id, name: fullName(c), cls: c.class_name || '', n, tickets: weighted ? 1 + (n - min) : 1 });
+        else if (n === min - 1 && n > 0) near.push({ name: fullName(c), cls: c.class_name || '', n });
+      }
+      elig.sort((a, b) => b.n - a.n || classCmp(a.cls, b.cls)); near.sort((a, b) => classCmp(a.cls, b.cls));
+      return { from, to, min, elig, near, weighted };
+    }
+    function renderRaffle(){
+      if (drawing) return;
+      const P = pool(), tickets = P.elig.reduce((s, e) => s + e.tickets, 0);
+      $('eligCount').textContent = P.bad ? 'יש לבחור טווח תאריכים תקין' : `${P.elig.length} שוחרים · ${tickets} כרטיסים`;
+      $('eligBody').innerHTML = P.elig.length ? P.elig.map(e => `<tr><td><b>${esc(e.name)}</b></td><td>${esc(e.cls)}</td><td class="num">${e.n}</td><td class="num">${e.tickets}</td></tr>`).join('') : '<tr><td colspan="4" class="empty">אין שוחרים שעומדים בתנאי בתקופה הזו</td></tr>';
+      $('nearBody').innerHTML = P.near.length ? P.near.map(e => `<tr><td>${esc(e.name)}</td><td>${esc(e.cls)}</td><td class="num">${e.n}</td></tr>`).join('') : '<tr><td colspan="3" class="empty">אין</td></tr>';
+      if (!$('stage').dataset.done){ $('roll').textContent = P.elig.length ? `${P.elig.length} משתתפים` : 'אין משתתפים'; $('rollSub').textContent = P.bad ? '' : `${fmtDate(P.from)} עד ${fmtDate(P.to)} · ${P.min} כוסות ומעלה`; }
+    }
+    const rnd = (n) => { const a = new Uint32Array(1); crypto.getRandomValues(a); return Math.floor(a[0] / 4294967296 * n); };
+    $('drawBtn').addEventListener('click', async () => {
+      const P = pool(), k = Math.max(1, Number($('rWin').value) || 1);
+      if (!P.elig.length) return toast('אין משתתפים שעומדים בתנאי', true);
+      if (k > P.elig.length && !confirm(`יש רק ${P.elig.length} משתתפים, כולם יזכו. להמשיך?`)) return;
+      let left = P.elig.map(e => ({ ...e })), winners = [];
+      while (winners.length < k && left.length){
+        let r = rnd(left.reduce((s, e) => s + e.tickets, 0)), i = 0;
+        while (r >= left[i].tickets){ r -= left[i].tickets; i++; }
+        winners.push(left[i]); left.splice(i, 1);
+      }
+      drawing = true; $('drawBtn').disabled = true; delete $('stage').dataset.done; $('stage').querySelector('.winners')?.remove();
+      const names = P.elig.map(e => e.name); let delay = 45; const t0 = performance.now();
+      await new Promise(res => { const spin = () => { $('roll').textContent = names[rnd(names.length)]; $('rollSub').textContent = 'מגריל...'; if (performance.now() - t0 > 2600) return res(); delay *= 1.07; setTimeout(spin, delay); }; spin(); });
+      $('roll').textContent = winners.length === 1 ? 'הזוכה' : 'הזוכים';
+      $('rollSub').textContent = `${fmtDate(P.from)} עד ${fmtDate(P.to)} · מתוך ${P.elig.length} משתתפים`;
+      const w = document.createElement('div'); w.className = 'winners';
+      w.innerHTML = winners.map((x, i) => `<div class="winner" style="animation-delay:${i * .15}s"><b>${esc(x.name)}</b><span>${esc(x.cls)} · ${x.n} כוסות</span></div>`).join('');
+      $('stage').appendChild(w); $('stage').dataset.done = '1';
+      try {
+        const r = await api('admin_save_raffle', { p: { period_start: P.from, period_end: P.to, threshold: P.min, weighted: !!P.weighted, eligible_count: P.elig.length, winners: winners.map(x => ({ id: x.id, name: x.name, cls: x.cls, cups: x.n })) } });
+        if (r.ok){ raffles.unshift(r.raffle); renderHistory(); toast('ההגרלה נשמרה בהיסטוריה'); }
+      } catch { toast('ההגרלה בוצעה אך לא נשמרה', true); }
+      finally { drawing = false; $('drawBtn').disabled = false; }
+    });
+    function renderHistory(){
+      $('histBody').innerHTML = raffles.length ? raffles.map(r => `<tr>
+        <td class="num">${fmtDate(dayKey(new Date(r.created_at)))} ${fTime.format(new Date(r.created_at))}</td>
+        <td class="num">${fmtDate(r.period_start)} עד ${fmtDate(r.period_end)}</td>
+        <td>${r.threshold}${r.weighted ? ' <span class="tag cls">משוקלל</span>' : ''}</td><td>${r.eligible_count}</td>
+        <td style="white-space:normal">${(r.winners || []).map(w => `<span class="tag gold">${esc(w.name)}${w.cls ? ' · ' + esc(w.cls) : ''}</span>`).join(' ')}</td></tr>`).join('')
+        : '<tr><td colspan="5" class="empty">עוד לא בוצעו הגרלות</td></tr>';
+    }
+
+    /* ---------- ייבוא ---------- */
+    const drop = $('drop');
+    ['dragenter','dragover'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('over'); }));
+    ['dragleave','drop'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove('over'); }));
+    drop.addEventListener('drop', e => { const f = e.dataTransfer.files[0]; if (f) readFile(f); });
+    $('file').addEventListener('change', e => { const f = e.target.files[0]; if (f) readFile(f); e.target.value = ''; });
+    function parseDate(v){
+      if (v === null || v === undefined || v === '') return null;
+      const ok = (y, m, d) => (y > 1900 && m >= 1 && m <= 12 && d >= 1 && d <= 31) ? `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}` : null;
+      if (typeof v === 'number'){ const p = XLSX.SSF.parse_date_code(v); return p ? ok(p.y, p.m, p.d) : null; }
+      if (v instanceof Date) return ok(v.getFullYear(), v.getMonth() + 1, v.getDate());
+      const s = String(v).trim(); let m = s.match(/^(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})/);
+      if (m) return ok(+m[1], +m[2], +m[3]);
+      m = s.match(/^(\d{1,2})[-/.](\d{1,2})[-/.](\d{2,4})/);
+      if (m){ let y = +m[3]; if (y < 100) y += y > 30 ? 1900 : 2000; return ok(y, +m[2], +m[1]); }
+      return null;
+    }
+    async function readFile(file){
+      if (!window.XLSX) return toast('רכיב האקסל עדיין נטען, יש לנסות שוב', true);
+      try {
+        const wb = XLSX.read(await file.arrayBuffer(), { type: 'array' });
+        const raw = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { header: 1, raw: true, defval: '' });
+        const rows = [], warns = [];
+        raw.forEach((r, i) => {
+          const first = String(r[0] ?? '').trim(), tz = normTz(r[3]), pn = normPn(r[4]);
+          if (!first && !tz && !pn) return;
+          if (i === 0 && !tz && !pn) return;
+          if (!tz && !pn){ warns.push(`שורה ${i + 1} (${first}): ללא ת.ז ומספר אישי, דולגה`); return; }
+          if (!first){ warns.push(`שורה ${i + 1}: ללא שם פרטי, דולגה`); return; }
+          const bd = parseDate(r[6]); if (r[6] !== '' && !bd) warns.push(`שורה ${i + 1} (${first}): תאריך לידה לא מזוהה "${r[6]}"`);
+          rows.push({ first_name: first, last_name: String(r[1] ?? '').trim(), class_name: String(r[2] ?? '').trim(), tz, personal_number: pn, unit: String(r[5] ?? '').trim() || 'אשדוד', birth_date: bd, active: true, _line: i + 1 });
+        });
+        const seen = new Map(), clean = [];
+        for (const r of rows){
+          const k1 = r.tz && 't' + r.tz, k2 = r.personal_number && 'p' + r.personal_number, dup = (k1 && seen.get(k1)) || (k2 && seen.get(k2));
+          if (dup){ warns.push(`שורה ${r._line} (${r.first_name}) כפולה לשורה ${dup._line}, נלקחה האחרונה`); clean.splice(clean.indexOf(dup), 1); }
+          clean.push(r); if (k1) seen.set(k1, r); if (k2) seen.set(k2, r);
+        }
+        const byTz = new Map(cadets.filter(c => c.tz).map(c => [c.tz, c])), byPn = new Map(cadets.filter(c => c.personal_number).map(c => [c.personal_number, c]));
+        const match = (r) => (r.tz && byTz.get(r.tz)) || (r.personal_number && byPn.get(r.personal_number));
+        const out = []; let ins = 0, upd = 0;
+        for (const r of clean){
+          const ex = match(r), { _line, ...data } = r;
+          if (ex){ upd++; out.push({ ...data, id: ex.id, active: ex.active, tz: data.tz || ex.tz, personal_number: data.personal_number || ex.personal_number, birth_date: data.birth_date || ex.birth_date }); }
+          else { ins++; out.push(data); }
+        }
+        pending = out;
+        const classes = [...new Set(clean.map(r => r.class_name).filter(Boolean))].sort(classCmp);
+        $('preview').innerHTML = `
+          <div class="summary"><div><b>${clean.length}</b>תלמידים בקובץ</div><div><b>${ins}</b>חדשים</div><div><b>${upd}</b>יתעדכנו</div><div><b>${classes.length}</b>כיתות: ${classes.map(esc).join(', ')}</div></div>
+          ${warns.length ? `<div class="warn">${warns.slice(0, 15).map(esc).join('<br>')}${warns.length > 15 ? `<br>ועוד ${warns.length - 15} הערות` : ''}</div>` : ''}
+          <div class="tbl" style="max-height:300px;margin:12px 0"><table><thead><tr><th>שם</th><th>כיתה</th><th>ת.ז</th><th>מספר אישי</th><th>שלוחה</th><th>תאריך לידה</th><th></th></tr></thead><tbody>
+          ${clean.slice(0, 200).map(r => `<tr><td>${esc(r.first_name + ' ' + r.last_name)}</td><td>${esc(r.class_name)}</td><td class="num">${esc(r.tz || '')}</td><td class="num">${esc(r.personal_number || '')}</td><td>${esc(r.unit)}</td><td class="num">${fmtDate(r.birth_date)}</td><td>${match(r) ? '<span class="tag cls">עדכון</span>' : '<span class="tag ok">חדש</span>'}</td></tr>`).join('')}
+          </tbody></table></div>
+          <button class="btn navy" id="doImport">ייבוא ${clean.length} תלמידים</button> <button class="btn lite" id="cancelImport">ביטול</button>`;
+        $('doImport').onclick = runImport;
+        $('cancelImport').onclick = () => { pending = null; $('preview').innerHTML = ''; };
+      } catch (err){ console.error(err); toast('לא ניתן לקרוא את הקובץ', true); }
+    }
+    async function runImport(){
+      if (!pending) return;
+      const btn = $('doImport'); btn.disabled = true; btn.textContent = 'מייבא...';
+      let errs = [];
+      try {
+        for (let i = 0; i < pending.length; i += 300){
+          const r = await api('admin_upsert_cadets', { p_rows: pending.slice(i, i + 300) });
+          errs = errs.concat(r.errors || []);
+        }
+      } catch {}
+      pending = null; $('preview').innerHTML = '';
+      await loadAll();
+      if (errs.length) toast(`הייבוא הסתיים עם ${errs.length} שגיאות (${errs.slice(0, 3).map(e => e.name).join(', ')})`, true);
+      else toast('הייבוא הושלם');
+    }
+
+    /* ---------- הגדרות ---------- */
+    const branchUrl = (id) => `${location.origin}${location.pathname}?b=${id}`;
+    function syncRaffleFields(){ const c = $('sRMode').value === 'custom'; $('sRFrom').disabled = $('sRTo').disabled = !c; }
+    $('sRMode').addEventListener('change', syncRaffleFields);
+    function renderSettings(){
+      $('sCode').value = settings.seller_code || ''; $('sMin').value = settings.window_minutes || 10;
+      $('sREnabled').checked = settings.raffle_enabled !== false; $('sRMin').value = settings.raffle_threshold || 3;
+      $('sRMode').value = settings.raffle_mode || 'month'; $('sRFrom').value = settings.raffle_start || ''; $('sRTo').value = settings.raffle_end || '';
+      syncRaffleFields(); renderLinks();
+    }
+    function renderLinks(){
+      $('links').innerHTML = branches.map(b => `
+        <div class="lk"><div>
+          <label class="f">שם הסניף<input data-bname="${b.id}" value="${esc(b.name)}" required></label>
+          <div class="url">${esc(branchUrl(b.id))}</div>
+          <div class="acts"><button type="button" class="btn sm lite" data-copy="${b.id}">העתקת קישור</button><button type="button" class="btn sm lite" data-open="${b.id}">פתיחה</button><button type="button" class="btn sm lite" data-qr="${b.id}">הורדת QR</button></div>
+        </div><div class="qr" id="qr${b.id}"></div></div>`).join('');
+      if (window.QRCode) branches.forEach(b => { try { new QRCode($('qr' + b.id), { text: branchUrl(b.id), width: 400, height: 400, colorDark: '#0a2342', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.M }); } catch {} });
+    }
+    $('links').addEventListener('click', async (e) => {
+      const b = e.target.closest('button'); if (!b) return;
+      if (b.dataset.copy){ try { await navigator.clipboard.writeText(branchUrl(b.dataset.copy)); toast('הקישור הועתק'); } catch { toast('לא ניתן להעתיק', true); } }
+      if (b.dataset.open) window.open(branchUrl(b.dataset.open), '_blank');
+      if (b.dataset.qr){ const box = $('qr' + b.dataset.qr), cv = box.querySelector('canvas'), img = box.querySelector('img'); const src = cv ? cv.toDataURL('image/png') : img?.src; if (!src) return;
+        const a = document.createElement('a'); a.href = src; a.download = `qr_${branchName(Number(b.dataset.qr)) || b.dataset.qr}.png`; a.click(); }
+    });
+    $('setForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const code = digits($('sCode').value);
+      if (code.length < 4 || code.length > 8) return toast('הקוד צריך להיות 4 עד 8 ספרות', true);
+      const mode = $('sRMode').value;
+      if (mode === 'custom' && (!$('sRFrom').value || !$('sRTo').value || $('sRFrom').value > $('sRTo').value)) return toast('יש לבחור טווח תאריכים תקין להגרלה', true);
+      try {
+        const r = await api('admin_save_settings', { p: {
+          seller_code: code, window_minutes: Number($('sMin').value), raffle_enabled: $('sREnabled').checked, raffle_threshold: Number($('sRMin').value),
+          raffle_mode: mode, raffle_start: $('sRFrom').value || null, raffle_end: $('sRTo').value || null,
+          branches: [...document.querySelectorAll('[data-bname]')].map(i => ({ id: Number(i.dataset.bname), name: i.value.trim() })) } });
+        if (!r.ok) return toast('שגיאה בשמירה', true);
+        raffleInit = false; await loadAll(); toast('ההגדרות נשמרו');
+      } catch {}
+    });
+    $('pwChange').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if ($('pNew').value !== $('pNew2').value) return toast('הסיסמאות החדשות אינן תואמות', true);
+      try {
+        const r = await api('admin_change_password', { p_old: $('pOld').value, p_new: $('pNew').value });
+        if (!r.ok) return toast(r.error === 'wrong_password' ? 'הסיסמה הנוכחית שגויה' : r.error === 'too_short' ? 'הסיסמה צריכה לכלול לפחות 4 תווים' : 'שגיאה', true);
+        $('pwChange').reset(); toast('הסיסמה הוחלפה');
+      } catch {}
+    });
+
+    return { enter };
+  })();
+
+  /* ---------- הפעלה ---------- */
+  loadBranches().then(() => {
+    renderBranchChip();
+    const t = ss.get('bf_admin');
+    if (t){ Admin.enter(t); return; }
+    const saved = ss.get(KEY);
+    if (saved && !saved.redeemed && Date.parse(saved.expires_at) - (Date.now() + saved.offset) > 0){ S = saved; renderActive(); }
+    else ss.del(KEY);
+  });
+})();
+</script>
+</body>
+</html>
