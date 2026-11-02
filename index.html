@@ -3,272 +3,336 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#12171e" media="(prefers-color-scheme: dark)">
 <title>אימות זכאות · שלוחת אשדוד</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700&family=Frank+Ruhl+Libre:wght@500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Hebrew:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+/* =====================================================================
+   מערכת עיצוב: צבעים מותאמים אוטומטית למצב בהיר וכהה
+   ===================================================================== */
 :root{
-  --ink:#1c2128; --navy:#14365d; --navy2:#1f4a7a; --muted:#5f6b78; --faint:#8a939e;
-  --rule:#d8dce2; --rule2:#eceef1; --page:#f4f5f7; --paper:#fff;
-  --ok:#1d6b45; --ok-bg:#f1f7f3; --bad:#a3262f; --bad-bg:#fbf2f3; --gray:#6b7480; --gold:#8a6a1f; --gold-bg:#faf6ec;
-  --serif:'Frank Ruhl Libre',Georgia,serif; --sans:'Assistant',system-ui,sans-serif;
+  color-scheme: light dark;
+  --brand:#13325a; --brand2:#0d2545; --brand-ink:#ffffff; --brand-muted:#b6c6dc; --brand-rule:rgba(255,255,255,.16);
+  --accent:#13325a; --btn:#13325a; --btn-h:#1c4475; --btn-fg:#ffffff;
+  --ink:#1a1f26; --muted:#56616e; --faint:#838c97;
+  --paper:#ffffff; --page:#f3f4f6; --field:#ffffff; --rule:#d7dbe0; --rule2:#eaecef; --line-strong:#1a1f26;
+  --ok:#17663f; --ok-bg:#eef6f1; --ok-ink:#0f3d26;
+  --bad:#a1242d; --bad-bg:#fbf0f1; --bad-ink:#5a1218;
+  --gray:#66707b; --gold:#86651c; --gold-bg:#faf5e8;
+  --bar:#13325a; --bar2:#7088a8;
+  --font:'IBM Plex Sans Hebrew',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
+  --mast-h:64px;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --brand:#0e2340; --brand2:#0a1a31; --brand-muted:#8fa5c2; --brand-rule:rgba(255,255,255,.12);
+    --accent:#a9c6ec; --btn:#3a6aa3; --btn-h:#4a7bb5; --btn-fg:#ffffff;
+    --ink:#e6e9ee; --muted:#a3acb8; --faint:#7d8794;
+    --paper:#12171e; --page:#0c1015; --field:#0f141a; --rule:#2b333e; --rule2:#1f262f; --line-strong:#c9d0d9;
+    --ok:#4cc187; --ok-bg:#12261c; --ok-ink:#bfe9d2;
+    --bad:#f07a82; --bad-bg:#2a1417; --bad-ink:#f6c9cc;
+    --gray:#9aa3ae; --gold:#d8b25e; --gold-bg:#2a2414;
+    --bar:#7fa6d8; --bar2:#4f6f96;
+  }
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{-webkit-text-size-adjust:100%}
-body{font-family:var(--sans);font-size:16px;color:var(--ink);background:var(--paper);min-height:100vh;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums;line-height:1.5}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{font-family:var(--font);font-size:1rem;line-height:1.55;color:var(--ink);background:var(--paper);min-height:100vh;min-height:100dvh;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
 button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .hidden{display:none!important}
 .nb{white-space:nowrap}
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 
-/* ---------- כותרת ---------- */
-.mast{background:var(--paper);border-bottom:1px solid var(--rule)}
-.mast::after{content:"";display:block;height:3px;background:var(--navy)}
-.mast .in{max-width:1180px;margin:0 auto;padding:16px 20px 14px;display:flex;align-items:flex-end;justify-content:space-between;gap:16px}
-.org .o1{font-size:.82rem;font-weight:600;color:var(--muted)}
-.org .o2{font-family:var(--serif);font-size:1.3rem;font-weight:700;color:var(--navy);line-height:1.25;user-select:none}
-.mast-side{font-size:.9rem;color:var(--muted);text-align:left;display:flex;align-items:center;gap:16px}
+/* ---------- כותרת עליונה ---------- */
+.mast{background:var(--paper);border-bottom:1px solid var(--rule);position:relative;z-index:3}
+.mast .in{max-width:1440px;margin:0 auto;padding:0 clamp(16px,3vw,36px);min-height:var(--mast-h);display:flex;align-items:center;justify-content:space-between;gap:16px}
+.org{display:flex;align-items:center;gap:14px;min-width:0}
+.org .o1{font-weight:700;font-size:.95rem;color:var(--ink);white-space:nowrap}
+.org .sep{width:1px;height:22px;background:var(--rule)}
+.org .o2{font-weight:500;font-size:.95rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;user-select:none;-webkit-user-select:none}
+.mast-side{font-size:.9rem;color:var(--muted);display:flex;align-items:center;gap:18px;white-space:nowrap}
 .mast-side b{color:var(--ink);font-weight:600}
-.txtbtn{background:none;border:0;color:var(--navy);font-weight:600;cursor:pointer;font-size:.9rem;padding:0}
-.txtbtn:hover{text-decoration:underline}
+.txtbtn{background:none;border:0;color:var(--accent);font-weight:600;cursor:pointer;font-size:.92rem;padding:4px 0}
+.txtbtn:hover{text-decoration:underline;text-underline-offset:3px}
 
 /* ---------- רכיבים ---------- */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--navy);background:var(--navy);color:#fff;border-radius:3px;padding:10px 18px;font-weight:600;font-size:.95rem;cursor:pointer;transition:background .15s}
-.btn:hover{background:var(--navy2)}
-.btn:disabled{opacity:.5;cursor:default}
-.btn.line{background:var(--paper);color:var(--navy);border-color:#aeb6c0}
-.btn.line:hover{background:var(--page)}
-.btn.danger{background:var(--paper);color:var(--bad);border-color:#d9a9ad}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;border:1px solid var(--btn);background:var(--btn);color:var(--btn-fg);border-radius:4px;padding:8px 18px;font-weight:600;font-size:.95rem;cursor:pointer;transition:background .15s,border-color .15s}
+.btn:hover{background:var(--btn-h);border-color:var(--btn-h)}
+.btn:disabled{opacity:.55;cursor:default}
+.btn.line{background:transparent;color:var(--accent);border-color:var(--rule)}
+.btn.line:hover{background:var(--page);border-color:var(--faint)}
+.btn.danger{background:transparent;color:var(--bad);border-color:color-mix(in srgb,var(--bad) 40%,transparent)}
 .btn.danger:hover{background:var(--bad-bg)}
 .btn.danger.solid{background:var(--bad);border-color:var(--bad);color:#fff}
-.btn.sm{padding:5px 11px;font-size:.84rem}
-.btn.block{width:100%;padding:14px;font-size:1.05rem}
-.err{color:var(--bad);font-size:.92rem;font-weight:600;min-height:1.4em;margin-top:10px}
+.btn.sm{min-height:32px;padding:4px 11px;font-size:.85rem}
+.btn.block{width:100%;min-height:54px;font-size:1.05rem}
+.err{color:var(--bad);font-size:.92rem;font-weight:500;min-height:1.45em;margin-top:10px}
 .spin{width:18px;height:18px;border-radius:50%;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;animation:sp .7s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
 
 /* =====================================================================
-   שוחר
+   שוחר: פריסת פורטל (מחשב: שני טורים, מובייל: אזורים מוערמים)
    ===================================================================== */
-#cadetApp main{max-width:520px;margin:0 auto;padding:30px 20px 120px}
-.view{display:none}
-.view.on{display:block;animation:fade .2s ease}
-@keyframes fade{from{opacity:0}to{opacity:1}}
-h1.h{font-family:var(--serif);font-size:1.85rem;font-weight:700;color:var(--navy);line-height:1.2}
-.lede{color:var(--muted);font-size:1rem;margin-top:10px;line-height:1.6}
-.lede b{color:var(--ink);font-weight:600}
-.form{margin-top:28px;padding-top:24px;border-top:1px solid var(--rule)}
-label.lbl{display:block;font-weight:600;font-size:.95rem;margin-bottom:8px}
-.inp{width:100%;height:54px;padding:0 14px;border:1px solid #9aa5b1;border-radius:3px;background:var(--paper);font-size:1.3rem;font-weight:600;letter-spacing:.08em;text-align:center;direction:ltr;outline:none;transition:border-color .15s,box-shadow .15s}
-.inp::placeholder{font-size:1rem;letter-spacing:0;font-weight:400;color:#a3abb5}
-.inp:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(20,54,93,.12)}
-.form .btn.block{margin-top:14px}
-.fine{margin-top:26px;padding-top:16px;border-top:1px solid var(--rule2);font-size:.85rem;color:var(--faint);line-height:1.6}
+.portal{display:grid;grid-template-columns:40% 1fr;min-height:calc(100vh - var(--mast-h));min-height:calc(100dvh - var(--mast-h))}
+.pane{background:var(--brand);color:var(--brand-ink);position:relative;overflow:hidden}
+.pane::before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,transparent 40%,var(--brand2))}
+.pane-in{position:relative;height:100%;display:flex;flex-direction:column;padding:clamp(36px,6vh,72px) clamp(28px,4vw,64px)}
+.pane .unit{font-size:.9rem;font-weight:600;color:var(--brand-muted)}
+.pane .title{font-size:clamp(2rem,1.2rem + 2.2vw,3.1rem);font-weight:700;line-height:1.12;margin-top:14px;letter-spacing:-.01em}
+.pane .offer{display:flex;align-items:flex-end;gap:16px;margin-top:clamp(24px,5vh,48px);padding-top:clamp(20px,4vh,36px);border-top:1px solid var(--brand-rule)}
+.pane .pct{font-size:clamp(3.4rem,2.4rem + 3vw,5.4rem);font-weight:700;line-height:.85;direction:ltr;letter-spacing:-.02em}
+.pane .offer span:last-child{font-size:1.05rem;color:var(--brand-muted);line-height:1.4;padding-bottom:4px}
+.pane .offer b{color:#fff;font-weight:600}
+.steps{list-style:none;margin-top:auto;padding-top:clamp(28px,6vh,56px);counter-reset:s}
+.steps li{counter-increment:s;display:grid;grid-template-columns:34px 1fr;gap:4px 14px;padding:14px 0;border-top:1px solid var(--brand-rule)}
+.steps li::before{content:counter(s);grid-row:span 2;width:30px;height:30px;border:1px solid rgba(255,255,255,.4);border-radius:50%;display:grid;place-items:center;font-size:.9rem;font-weight:600}
+.steps b{font-weight:600}
+.steps span{font-size:.9rem;color:var(--brand-muted)}
+.pane .legal{margin-top:18px;font-size:.82rem;color:var(--brand-muted)}
 
-.status{display:inline-flex;align-items:center;gap:9px;font-weight:700;font-size:.95rem}
-.status i{width:11px;height:11px;flex:none}
+.work{display:flex;flex-direction:column;background:var(--paper)}
+.work-in{flex:1;width:100%;max-width:500px;margin:0 auto;padding:clamp(32px,8vh,96px) clamp(20px,4vw,48px) 120px;display:flex;flex-direction:column}
+.work-foot{max-width:500px;width:100%;margin:0 auto;padding:16px clamp(20px,4vw,48px) 22px;border-top:1px solid var(--rule2);font-size:.8rem;color:var(--faint);display:flex;justify-content:space-between;gap:12px}
+
+.view{display:none}
+.view.on{display:block;animation:fade .22s ease}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.kick{font-size:.88rem;font-weight:600;color:var(--muted)}
+h1.h{font-size:clamp(1.6rem,1.2rem + 1.2vw,2.05rem);font-weight:700;color:var(--ink);line-height:1.2;margin-top:6px;letter-spacing:-.005em}
+.lede{color:var(--muted);font-size:1rem;margin-top:10px;line-height:1.65}
+.form{margin-top:30px}
+label.lbl{display:block;font-weight:600;font-size:.95rem;margin-bottom:8px}
+.hint{font-size:.85rem;color:var(--faint);margin-top:8px}
+.inp{width:100%;height:56px;padding:0 16px;border:1px solid var(--rule);border-bottom:2px solid var(--line-strong);border-radius:4px 4px 0 0;background:var(--field);font-size:1.35rem;font-weight:500;letter-spacing:.06em;text-align:right;direction:ltr;outline:none;transition:border-color .15s,background .15s}
+.inp:focus{border-color:var(--accent);border-bottom-color:var(--accent);background:color-mix(in srgb,var(--accent) 4%,var(--field))}
+.form .btn.block{margin-top:16px}
+.fine{margin-top:28px;padding-top:18px;border-top:1px solid var(--rule2);font-size:.86rem;color:var(--faint);line-height:1.65}
+
+.status{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:.95rem}
+.status i{width:10px;height:10px;flex:none;border-radius:2px}
 .status.ok{color:var(--ok)}.status.ok i{background:var(--ok)}
 .status.bad{color:var(--bad)}.status.bad i{background:var(--bad)}
 .status.gray{color:var(--gray)}.status.gray i{background:var(--gray)}
 .status .pulse{animation:pulse 1.8s ease-in-out infinite}
-@keyframes pulse{50%{opacity:.35}}
-.name{font-family:var(--serif);font-size:2.2rem;font-weight:700;color:var(--ink);line-height:1.15;margin-top:14px}
+@keyframes pulse{50%{opacity:.3}}
+.name{font-size:clamp(1.9rem,1.4rem + 1.6vw,2.5rem);font-weight:700;color:var(--ink);line-height:1.15;margin-top:12px;letter-spacing:-.01em}
 .sub{color:var(--muted);font-size:1rem;margin-top:4px}
 .bday{margin-top:16px;padding:10px 14px;border-inline-start:3px solid var(--gold);background:var(--gold-bg);color:var(--gold);font-weight:600;font-size:.95rem}
-dl.rows{margin-top:22px;border-top:1px solid var(--ink)}
-dl.rows>div{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:12px 0;border-bottom:1px solid var(--rule)}
+dl.rows{margin-top:24px;border-top:2px solid var(--line-strong)}
+dl.rows>div{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:13px 0;border-bottom:1px solid var(--rule)}
 dl.rows dt{color:var(--muted);font-size:.95rem}
-dl.rows dd{font-weight:700;font-size:1.05rem;text-align:left}
-dl.rows dd.fig{font-family:var(--serif);font-size:1.2rem;direction:ltr}
-.note{margin-top:20px;padding:14px 16px;border-inline-start:4px solid var(--ok);background:var(--ok-bg);font-weight:600;font-size:1.05rem;line-height:1.5;color:#123f29}
-.note.bad{border-color:var(--bad);background:var(--bad-bg);color:#5e1219}
+dl.rows dd{font-weight:600;font-size:1.05rem;text-align:left}
+dl.rows dd.fig{font-size:1.2rem;direction:ltr;letter-spacing:.01em}
+.note{margin-top:22px;padding:14px 16px;border-inline-start:4px solid var(--ok);background:var(--ok-bg);font-weight:600;font-size:1.04rem;line-height:1.55;color:var(--ok-ink)}
+.note.bad{border-color:var(--bad);background:var(--bad-bg);color:var(--bad-ink)}
 .note.gray{border-color:var(--gray);background:var(--page);color:var(--ink)}
 .note small{display:block;font-weight:400;color:var(--muted);font-size:.9rem;margin-top:4px}
-.raffle{margin-top:22px}
-.raffle .rh{display:flex;justify-content:space-between;align-items:baseline;font-size:.92rem}
-.raffle .rh span:first-child{font-weight:700}
+.raffle{margin-top:24px}
+.raffle .rh{display:flex;justify-content:space-between;align-items:baseline;font-size:.93rem}
+.raffle .rh span:first-child{font-weight:600}
 .raffle .rh span:last-child{color:var(--muted)}
-.raffle .track{height:5px;background:var(--rule2);margin-top:8px;overflow:hidden}
-.raffle .track i{display:block;height:100%;background:var(--navy);transition:width .4s}
+.raffle .track{height:4px;background:var(--rule2);margin-top:9px;overflow:hidden;border-radius:2px}
+.raffle .track i{display:block;height:100%;background:var(--accent);transition:width .4s}
 .raffle.full .track i{background:var(--gold)}
-.raffle p{margin-top:8px;font-weight:600;font-size:.98rem}
+.raffle p{margin-top:9px;font-weight:600;font-size:.98rem}
 .raffle.full p{color:var(--gold)}
 .raffle small{color:var(--faint);font-size:.85rem}
-.acts{margin-top:28px}
+.acts{margin-top:30px}
 
-/* ---------- מוכר ---------- */
 .seller-who{margin-top:10px;color:var(--muted)}
-.seller-who b{color:var(--ink)}
-.branches{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:20px}
-.branches button{height:46px;border:1px solid #aeb6c0;border-radius:3px;background:var(--paper);font-weight:600;cursor:pointer}
-.branches button.sel{background:var(--navy);border-color:var(--navy);color:#fff}
-.branches .fixed{grid-column:1/-1;display:flex;justify-content:space-between;padding:12px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.seller-who b{color:var(--ink);font-weight:600}
+.branches{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:22px}
+.branches button{min-height:48px;border:1px solid var(--rule);border-radius:4px;background:var(--field);font-weight:600;cursor:pointer}
+.branches button.sel{background:var(--btn);border-color:var(--btn);color:var(--btn-fg)}
+.branches .fixed{grid-column:1/-1;display:flex;justify-content:space-between;padding:13px 0;border-top:2px solid var(--line-strong);border-bottom:1px solid var(--rule)}
 .branches .fixed span{color:var(--muted)}
-.branches .fixed b{font-weight:700}
-.pin{display:flex;justify-content:center;gap:16px;direction:ltr;margin:26px 0 20px}
-.pin span{width:12px;height:12px;border-radius:50%;border:1.5px solid var(--navy)}
-.pin span.f{background:var(--navy)}
+.branches .fixed b{font-weight:600}
+.pin{display:flex;justify-content:center;gap:16px;direction:ltr;margin:28px 0 20px}
+.pin span{width:12px;height:12px;border-radius:50%;border:1.5px solid var(--accent)}
+.pin span.f{background:var(--accent)}
 .pin.shake{animation:shake .35s}
 @keyframes shake{25%{transform:translateX(-7px)}50%{transform:translateX(7px)}75%{transform:translateX(-4px)}}
 .keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;direction:ltr}
-.keypad button{height:58px;border:1px solid var(--rule);border-radius:3px;background:var(--page);font-size:1.45rem;font-weight:600;cursor:pointer;transition:background .1s}
-.keypad button:active{background:#e3e7ec}
-.keypad .ok{background:var(--navy);border-color:var(--navy);color:#fff}
+.keypad button{height:clamp(52px,7.5vh,64px);border:1px solid var(--rule);border-radius:4px;background:var(--page);font-size:1.45rem;font-weight:500;cursor:pointer;transition:background .1s}
+.keypad button:active{background:var(--rule2)}
+.keypad .ok{background:var(--btn);border-color:var(--btn);color:var(--btn-fg);font-size:1.05rem;font-weight:600}
 .keypad svg{width:22px;height:22px;vertical-align:middle}
 
-/* ---------- טיימר ---------- */
-.timer{position:fixed;left:0;right:0;bottom:0;background:var(--paper);border-top:1px solid var(--rule);padding:12px 20px max(12px,env(safe-area-inset-bottom));display:none;z-index:5}
+.timer{position:fixed;left:0;right:40%;bottom:0;background:var(--paper);border-top:1px solid var(--rule);padding:12px clamp(20px,4vw,48px) max(12px,env(safe-area-inset-bottom));display:none;z-index:5}
 .timer.on{display:block}
-.timer .prog{position:absolute;top:-1px;right:0;height:2px;background:var(--navy);transition:width 1s linear}
-.timer .in{max-width:520px;margin:0 auto;display:flex;justify-content:space-between;align-items:baseline}
+.timer .prog{position:absolute;top:-1px;right:0;height:2px;background:var(--accent);transition:width 1s linear}
+.timer .in{max-width:500px;margin:0 auto;display:flex;justify-content:space-between;align-items:baseline}
 .timer .l{font-size:.9rem;color:var(--muted)}
-.timer .v{font-family:var(--serif);font-size:1.5rem;font-weight:700;color:var(--ink);direction:ltr}
+.timer .v{font-size:1.5rem;font-weight:700;color:var(--ink);direction:ltr}
 .timer.low .prog{background:var(--bad)}
 .timer.low .v{color:var(--bad)}
-.foot{max-width:520px;margin:0 auto;padding:0 20px 30px;font-size:.8rem;color:var(--faint)}
+
+/* מובייל וטאבלט צר: אזור המותג הופך לרצועה עליונה */
+@media (max-width: 899px){
+  .portal{grid-template-columns:1fr;grid-template-rows:auto 1fr}
+  .pane-in{padding:22px 20px 24px}
+  .pane .title{font-size:clamp(1.5rem,1.1rem + 2.4vw,2rem);margin-top:6px}
+  .pane .offer{margin-top:16px;padding-top:14px;gap:12px}
+  .pane .pct{font-size:clamp(2.6rem,2rem + 3vw,3.4rem)}
+  .pane .offer span:last-child{font-size:.95rem}
+  .steps,.pane .legal{display:none}
+  .portal[data-view]:not([data-view="v-login"]) .pane .offer{display:none}
+  .portal[data-view]:not([data-view="v-login"]) .pane-in{padding:16px 20px}
+  .portal[data-view]:not([data-view="v-login"]) .pane .title{font-size:1.15rem}
+  .work-in{padding:26px 20px 110px}
+  .timer{right:0}
+}
+@media (min-width: 900px) and (max-height: 720px){
+  .steps li{padding:9px 0}
+  .pane .offer{margin-top:20px;padding-top:18px}
+}
+@media (max-width: 560px){
+  :root{--mast-h:56px}
+  .org .o2{font-size:.88rem}
+  .org .o1{font-size:.88rem}
+  .mast-side{font-size:.85rem}
+}
 
 /* =====================================================================
-   מנהל
+   ניהול
    ===================================================================== */
-#adminApp{background:var(--page);min-height:calc(100vh - 80px)}
+#adminApp{background:var(--page);min-height:calc(100vh - var(--mast-h))}
 .live{display:inline-flex;align-items:center;gap:7px;font-size:.85rem;color:var(--muted)}
 .live i{width:8px;height:8px;border-radius:50%;background:var(--ok);animation:pulse 2s ease-in-out infinite}
 .live.off i{background:var(--bad);animation:none}
 nav.tabs{background:var(--paper);border-bottom:1px solid var(--rule)}
-nav.tabs .in{max-width:1180px;margin:0 auto;padding:0 20px;display:flex;gap:26px;overflow-x:auto}
-nav.tabs button{border:0;background:none;padding:14px 0 12px;font-weight:600;font-size:.98rem;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap}
+nav.tabs .in{max-width:1440px;margin:0 auto;padding:0 clamp(16px,3vw,36px);display:flex;gap:28px;overflow-x:auto;scrollbar-width:none}
+nav.tabs button{border:0;background:none;padding:15px 0 13px;font-weight:500;font-size:.98rem;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap}
 nav.tabs button:hover{color:var(--ink)}
-nav.tabs button.on{color:var(--navy);border-bottom-color:var(--navy)}
-.wrap{max-width:1180px;margin:0 auto;padding:26px 20px 50px}
-.ph{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:18px}
-.ph h2{font-family:var(--serif);font-size:1.6rem;font-weight:700;color:var(--navy);line-height:1.2}
-.ph p{color:var(--muted);font-size:.92rem;margin-top:3px}
-.panel{background:var(--paper);border:1px solid var(--rule);border-radius:3px;padding:20px}
-.panel h3{font-family:var(--serif);font-size:1.12rem;font-weight:700;color:var(--ink);margin-bottom:14px;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
-.panel h3 small{font-family:var(--sans);font-weight:400;color:var(--muted);font-size:.84rem}
+nav.tabs button.on{color:var(--accent);border-bottom-color:var(--accent);font-weight:600}
+.wrap{max-width:1440px;margin:0 auto;padding:28px clamp(16px,3vw,36px) 56px}
+.ph{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:20px}
+.ph h2{font-size:1.6rem;font-weight:700;color:var(--ink);line-height:1.2;letter-spacing:-.005em}
+.ph p{color:var(--muted);font-size:.93rem;margin-top:3px}
+.panel{background:var(--paper);border:1px solid var(--rule);border-radius:4px;padding:20px}
+.panel h3{font-size:1.02rem;font-weight:600;color:var(--ink);margin-bottom:14px;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.panel h3 small{font-weight:400;color:var(--muted);font-size:.84rem}
 .gap{margin-top:16px}
 .toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.toolbar input,.toolbar select,.ctl{height:38px;padding:0 11px;border:1px solid #b5bdc7;border-radius:3px;background:var(--paper)}
+.toolbar input,.toolbar select{height:42px;padding:0 12px;border:1px solid var(--rule);border-radius:4px;background:var(--field)}
 .toolbar input[type=search]{flex:1;min-width:220px}
 .count{color:var(--muted);font-size:.88rem;margin-inline-start:auto}
-.seg{display:inline-flex;border:1px solid #b5bdc7;border-radius:3px;overflow:hidden;background:var(--paper)}
-.seg button{border:0;background:none;padding:0 13px;height:36px;font-weight:600;font-size:.88rem;color:var(--muted);cursor:pointer;border-inline-start:1px solid var(--rule)}
+.seg{display:inline-flex;border:1px solid var(--rule);border-radius:4px;overflow:hidden;background:var(--field)}
+.seg button{border:0;background:none;padding:0 14px;height:40px;font-weight:500;font-size:.9rem;color:var(--muted);cursor:pointer;border-inline-start:1px solid var(--rule)}
 .seg button:first-child{border-inline-start:0}
-.seg button.on{background:var(--navy);color:#fff}
-.figs{display:grid;grid-template-columns:repeat(4,1fr);background:var(--paper);border:1px solid var(--rule);border-radius:3px;margin-bottom:16px}
-.figs>div{padding:18px 20px;border-inline-start:1px solid var(--rule)}
+.seg button.on{background:var(--btn);color:var(--btn-fg);font-weight:600}
+.figs{display:grid;grid-template-columns:repeat(4,1fr);background:var(--paper);border:1px solid var(--rule);border-radius:4px;margin-bottom:16px}
+.figs>div{padding:18px 22px;border-inline-start:1px solid var(--rule)}
 .figs>div:first-child{border-inline-start:0}
-.figs .l{font-size:.88rem;color:var(--muted);font-weight:600}
-.figs .v{font-family:var(--serif);font-size:2.5rem;font-weight:700;color:var(--navy);line-height:1.1;margin-top:4px}
-.figs .v.bump{animation:bump .6s ease}
+.figs .l{font-size:.88rem;color:var(--muted);font-weight:500}
+.figs .v{font-size:2.5rem;font-weight:600;color:var(--ink);line-height:1.15;margin-top:4px;letter-spacing:-.02em}
+.figs .v.bump{animation:bump .8s ease}
 @keyframes bump{30%{color:var(--ok)}}
 .figs .s{font-size:.82rem;color:var(--faint)}
 @media(max-width:820px){.figs{grid-template-columns:1fr 1fr}.figs>div:nth-child(3){border-inline-start:0}.figs>div:nth-child(n+3){border-top:1px solid var(--rule)}}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .g3{display:grid;grid-template-columns:2fr 1fr;gap:16px}
-@media(max-width:900px){.g2,.g3{grid-template-columns:1fr}}
-.tbl{overflow:auto;border:1px solid var(--rule);border-radius:3px;background:var(--paper);max-height:66vh}
+@media(max-width:960px){.g2,.g3{grid-template-columns:1fr}}
+.tbl{overflow:auto;border:1px solid var(--rule);border-radius:4px;background:var(--paper);max-height:66vh}
 table{width:100%;border-collapse:collapse;font-size:.94rem}
-th{position:sticky;top:0;background:var(--paper);text-align:right;font-weight:700;color:var(--muted);font-size:.82rem;padding:11px 14px;border-bottom:1px solid var(--ink);white-space:nowrap;cursor:pointer;user-select:none;z-index:1}
+th{position:sticky;top:0;background:var(--paper);text-align:right;font-weight:600;color:var(--muted);font-size:.82rem;padding:11px 14px;border-bottom:1px solid var(--line-strong);white-space:nowrap;cursor:pointer;user-select:none;z-index:1}
 td{padding:10px 14px;border-bottom:1px solid var(--rule2);white-space:nowrap}
 tr:last-child td{border-bottom:0}
-tbody tr:hover{background:#fafbfc}
+tbody tr:hover{background:color-mix(in srgb,var(--page) 60%,var(--paper))}
 td.num{direction:ltr;text-align:right}
 tr.flash td{animation:flash 2.5s ease}
 @keyframes flash{0%,40%{background:var(--ok-bg)}}
-.st{display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:.88rem}
+.st{display:inline-flex;align-items:center;gap:6px;font-weight:500;font-size:.88rem}
 .st::before{content:"";width:7px;height:7px;border-radius:50%}
 .st.ok{color:var(--ok)}.st.ok::before{background:var(--ok)}
 .st.bad{color:var(--bad)}.st.bad::before{background:var(--bad)}
 .st.gold{color:var(--gold)}.st.gold::before{background:var(--gold)}
 .dim{color:var(--faint)}
 .empty{color:var(--faint);text-align:center;padding:26px;font-size:.92rem}
-.vbars{display:flex;align-items:flex-end;gap:10px;height:170px;padding-top:20px;border-bottom:1px solid var(--ink)}
-.vbars .c{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;min-width:0;position:relative}
-.vbars .b{width:100%;max-width:34px;background:var(--navy);position:relative;min-height:1px;transition:height .4s}
-.vbars .b span{position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-size:.8rem;font-weight:700}
+.vbars{display:flex;align-items:flex-end;gap:10px;height:170px;padding-top:20px;border-bottom:1px solid var(--line-strong)}
+.vbars .c{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;min-width:0}
+.vbars .b{width:100%;max-width:34px;background:var(--bar);position:relative;min-height:1px;transition:height .4s;border-radius:2px 2px 0 0}
+.vbars .b span{position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-size:.8rem;font-weight:600}
 .vlabels{display:flex;gap:10px;margin-top:6px}
 .vlabels span{flex:1;text-align:center;font-size:.76rem;color:var(--muted);white-space:nowrap;min-width:0;overflow:hidden}
 .vbars.thin{gap:3px}.vlabels.thin{gap:3px}
-.vbars.thin .b{background:#6f8bad}
+.vbars.thin .b{background:var(--bar2)}
 .vbars.thin .b span{display:none}
 .vlabels.thin span{font-size:.62rem}
-.hbars .r{display:grid;grid-template-columns:140px 1fr 40px;align-items:center;gap:14px;padding:7px 0;border-bottom:1px solid var(--rule2)}
+.hbars .r{display:grid;grid-template-columns:140px 1fr 40px;align-items:center;gap:14px;padding:8px 0;border-bottom:1px solid var(--rule2)}
 .hbars .r:last-child{border-bottom:0}
-.hbars .lab{font-weight:600;font-size:.92rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hbars .lab{font-weight:500;font-size:.92rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .hbars .lab small{display:block;color:var(--faint);font-weight:400;font-size:.78rem}
-.hbars .tr{height:6px;background:var(--rule2)}
-.hbars .fl{height:100%;background:var(--navy);transition:width .4s}
-.hbars .vv{font-family:var(--serif);font-weight:700;font-size:1.1rem;text-align:left}
+.hbars .tr{height:6px;background:var(--rule2);border-radius:3px;overflow:hidden}
+.hbars .fl{height:100%;background:var(--bar);transition:width .4s}
+.hbars .vv{font-weight:600;font-size:1.05rem;text-align:left}
 .brow{padding:12px 0;border-bottom:1px solid var(--rule2)}
 .brow:last-child{border-bottom:0}
 .brow .t{display:flex;justify-content:space-between;align-items:baseline}
-.brow .t b{font-weight:600}
-.brow .t span{font-family:var(--serif);font-size:1.6rem;font-weight:700;color:var(--navy)}
-.brow .tr{height:6px;background:var(--rule2);margin-top:6px}
-.brow .tr i{display:block;height:100%;background:var(--navy)}
+.brow .t b{font-weight:500}
+.brow .t span{font-size:1.6rem;font-weight:600;color:var(--ink)}
+.brow .tr{height:6px;background:var(--rule2);margin-top:6px;border-radius:3px;overflow:hidden}
+.brow .tr i{display:block;height:100%;background:var(--bar)}
 .brow small{color:var(--faint);font-size:.8rem}
 .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
-label.f{display:flex;flex-direction:column;gap:6px;font-weight:600;font-size:.9rem}
-label.f input,label.f select{height:40px;padding:0 11px;border:1px solid #b5bdc7;border-radius:3px;background:var(--paper);font-weight:500}
-label.f input:disabled{background:var(--page);color:#a3abb5}
+label.f{display:flex;flex-direction:column;gap:6px;font-weight:500;font-size:.9rem}
+label.f input,label.f select{height:42px;padding:0 12px;border:1px solid var(--rule);border-radius:4px;background:var(--field);font-weight:400}
+label.f input:disabled{background:var(--page);color:var(--faint)}
 label.f small{color:var(--faint);font-weight:400;font-size:.8rem}
-label.chk{display:flex;align-items:center;gap:8px;font-weight:500;font-size:.94rem;cursor:pointer}
-.code-in{font-family:var(--serif);font-size:1.5rem!important;letter-spacing:.3em;direction:ltr;text-align:center;font-weight:700!important}
-.stage{margin-top:18px;border-top:1px solid var(--ink);padding:26px 10px 8px;text-align:center;min-height:150px}
-.stage .eb{font-size:.88rem;color:var(--muted);font-weight:600}
-.stage .roll{font-family:var(--serif);font-size:2.1rem;font-weight:700;color:var(--navy);min-height:3rem;margin-top:4px}
+label.chk{display:flex;align-items:center;gap:8px;font-weight:400;font-size:.94rem;cursor:pointer}
+.code-in{font-size:1.5rem!important;letter-spacing:.3em;direction:ltr;text-align:center;font-weight:600!important}
+.stage{margin-top:18px;border-top:2px solid var(--line-strong);padding:26px 10px 8px;text-align:center;min-height:150px}
+.stage .eb{font-size:.88rem;color:var(--muted);font-weight:500}
+.stage .roll{font-size:2.1rem;font-weight:700;color:var(--ink);min-height:3rem;margin-top:4px}
 .stage .sub{color:var(--faint);font-size:.9rem}
-.winners{display:flex;flex-wrap:wrap;gap:0;justify-content:center;margin-top:14px;border-top:1px solid var(--rule)}
+.winners{display:flex;flex-wrap:wrap;justify-content:center;margin-top:14px;border-top:1px solid var(--rule)}
 .winner{padding:14px 26px;border-inline-start:1px solid var(--rule);animation:fade .4s ease both}
 .winner:first-child{border-inline-start:0}
-.winner b{display:block;font-family:var(--serif);font-size:1.35rem;color:var(--gold)}
-.winner span{font-size:.85rem;color:var(--muted)}
-.drop{display:block;border:1px dashed #9aa5b1;border-radius:3px;padding:36px 20px;text-align:center;background:var(--paper);cursor:pointer}
-.drop.over{border-color:var(--navy);background:#f0f4f9}
+.winner b{display:block;font-size:1.3rem;color:var(--gold);font-weight:700}
+.winner span{font-size:.85rem;color:var(--muted);font-weight:400}
+.drop{display:block;border:1px dashed var(--faint);border-radius:4px;padding:36px 20px;text-align:center;background:var(--paper);cursor:pointer}
+.drop.over{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 6%,var(--paper))}
 .drop b{display:block;margin-bottom:4px;font-weight:600}
 .drop small{color:var(--faint)}
-.cols{display:grid;grid-template-columns:repeat(7,1fr);border:1px solid var(--rule);border-radius:3px;background:var(--paper);margin-bottom:16px}
+.cols{display:grid;grid-template-columns:repeat(7,1fr);border:1px solid var(--rule);border-radius:4px;background:var(--paper);margin-bottom:16px}
 .cols div{padding:9px 12px;font-size:.88rem;border-inline-start:1px solid var(--rule2)}
 .cols div:first-child{border-inline-start:0}
-.cols b{display:block;font-family:var(--serif);color:var(--navy)}
+.cols b{display:block;color:var(--accent);font-weight:700}
 @media(max-width:820px){.cols{grid-template-columns:repeat(4,1fr)}}
 .summary{display:flex;flex-wrap:wrap;gap:24px;margin:20px 0 10px;font-size:.95rem;color:var(--muted)}
-.summary b{font-family:var(--serif);font-size:1.4rem;color:var(--navy);margin-inline-end:6px}
-.warn{border-inline-start:3px solid var(--gold);background:var(--gold-bg);color:#5e4810;padding:10px 14px;margin:10px 0;font-size:.88rem;line-height:1.7}
+.summary b{font-size:1.4rem;color:var(--ink);margin-inline-end:6px;font-weight:600}
+.warn{border-inline-start:3px solid var(--gold);background:var(--gold-bg);color:var(--gold);padding:10px 14px;margin:10px 0;font-size:.88rem;line-height:1.7}
 .links{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px}
-.lk{border:1px solid var(--rule);border-radius:3px;padding:16px;display:grid;grid-template-columns:1fr auto;gap:16px}
-.lk .url{font-family:ui-monospace,Menlo,monospace;font-size:.8rem;direction:ltr;text-align:left;background:var(--page);border:1px solid var(--rule2);padding:7px 9px;margin:10px 0;word-break:break-all}
+.lk{border:1px solid var(--rule);border-radius:4px;padding:16px;display:grid;grid-template-columns:1fr auto;gap:16px}
+.lk .url{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.8rem;direction:ltr;text-align:left;background:var(--page);border:1px solid var(--rule2);padding:7px 9px;margin:10px 0;word-break:break-all}
 .lk .qr{width:112px;height:112px;padding:6px;border:1px solid var(--rule);background:#fff}
 .lk .qr img,.lk .qr canvas{width:100%!important;height:100%!important}
 .lk .acts2{display:flex;gap:6px;flex-wrap:wrap}
-.modal{position:fixed;inset:0;background:rgba(20,30,45,.45);display:grid;place-items:center;z-index:50;padding:16px}
-.modal .m{background:var(--paper);border-radius:3px;padding:24px;width:100%;max-width:560px;max-height:92vh;overflow:auto;border-top:3px solid var(--navy)}
+.modal{position:fixed;inset:0;background:rgba(10,16,24,.5);display:grid;place-items:center;z-index:50;padding:16px}
+.modal .m{background:var(--paper);border-radius:4px;padding:24px;width:100%;max-width:560px;max-height:92vh;overflow:auto;border-top:3px solid var(--accent)}
 .modal .m.danger{border-top-color:var(--bad)}
-.modal .m h3{font-family:var(--serif);font-size:1.35rem;font-weight:700;color:var(--navy);margin-bottom:14px}
+.modal .m h3{font-size:1.3rem;font-weight:700;color:var(--ink);margin-bottom:14px}
 .modal .m.danger h3{color:var(--bad)}
-.modal .m p{color:var(--muted);font-size:.95rem;margin-bottom:16px;line-height:1.6}
+.modal .m p{color:var(--muted);font-size:.95rem;margin-bottom:16px;line-height:1.65}
 .modal .mact{display:flex;gap:8px;margin-top:22px}
 .radios{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
-.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:11px 18px;border-radius:3px;font-size:.92rem;font-weight:500;opacity:0;transition:.2s;z-index:60;pointer-events:none;max-width:90vw}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:#1a1f26;color:#fff;padding:11px 18px;border-radius:4px;font-size:.92rem;font-weight:500;opacity:0;transition:.2s;z-index:60;pointer-events:none;max-width:90vw;box-shadow:0 6px 20px rgba(0,0,0,.18)}
 .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
-.toast.bad{background:var(--bad)}
-.toast.ok{background:var(--ok)}
-@media(max-width:560px){
-  .mast .in{padding:14px 18px 12px}
-  .org .o2{font-size:1.12rem}
-  h1.h{font-size:1.6rem}
-  .name{font-size:1.9rem}
-}
+.toast.bad{background:#a1242d}
+.toast.ok{background:#17663f}
 </style>
 </head>
 <body>
 
 <header class="mast"><div class="in">
   <div class="org">
-    <div class="o1">חיל האוויר</div>
-    <div class="o2" id="orgTitle">מסלול השוחרות · שלוחת אשדוד</div>
+    <span class="o1">חיל האוויר</span>
+    <span class="sep" aria-hidden="true"></span>
+    <span class="o2" id="orgTitle">מסלול השוחרות</span>
   </div>
   <div class="mast-side" id="mastCadet"><span id="branchLbl" class="hidden"></span></div>
   <div class="mast-side hidden" id="mastAdmin">
@@ -280,84 +344,102 @@ label.chk{display:flex;align-items:center;gap:8px;font-weight:500;font-size:.94r
 <!-- =====================================================================
      שוחר
      ===================================================================== -->
-<div id="cadetApp">
-<main>
-  <section class="view on" id="v-login">
-    <h1 class="h">אימות זכאות להטבת שוחרים</h1>
-    <p class="lede">שוחרי שלוחת אשדוד זכאים ל<b>20% הנחה</b> על כל משקה ברשת <span class="nb">B FRESH</span>, בלבישת מדים.</p>
-    <form id="idForm" class="form" autocomplete="off">
-      <label class="lbl" for="idInput">מספר אישי או מספר תעודת זהות</label>
-      <input class="inp" id="idInput" inputmode="numeric" autocapitalize="characters" spellcheck="false" maxlength="12">
-      <button class="btn block" id="idBtn" type="submit">המשך</button>
-      <div class="err" id="idErr"></div>
-    </form>
-    <form id="pwForm" class="form hidden" autocomplete="off">
-      <label class="lbl" for="pwInput">סיסמה</label>
-      <input class="inp" id="pwInput" type="password" autocomplete="current-password">
-      <button class="btn block" id="pwBtn" type="submit">כניסה</button>
-      <div class="err" id="pwErr"></div>
-      <button type="button" class="txtbtn" id="pwCancel">חזרה</button>
-    </form>
-    <p class="fine">האימות מתבצע מול רשימת השוחרים הרשומים בשלוחה. לאחר האימות יש להציג את המסך למוכר בקופה.</p>
-  </section>
+<div id="cadetApp" class="portal" data-view="v-login">
+  <aside class="pane">
+    <div class="pane-in">
+      <div class="unit">שלוחת אשדוד</div>
+      <div class="title">הטבת שוחרים<br>ברשת <span class="nb">B FRESH</span></div>
+      <div class="offer"><span class="pct">20%</span><span><b>הנחה על כל משקה</b><br>בלבישת מדים בלבד</span></div>
+      <ol class="steps">
+        <li><b>הזדהות</b><span>מספר אישי או מספר תעודת זהות</span></li>
+        <li><b>הצגת האישור</b><span>מסך האישור מוצג למוכר בקופה</span></li>
+        <li><b>אישור המוכר</b><span>המוכר מזין קוד וההנחה נרשמת</span></li>
+      </ol>
+      <div class="legal">ההטבה מיועדת לשוחרים רשומים בלבד ובכפוף לנהלי השלוחה.</div>
+    </div>
+  </aside>
 
-  <section class="view" id="v-active">
-    <div class="status ok"><i class="pulse"></i>זכאי להטבה</div>
-    <div class="name" id="aName"></div>
-    <div class="sub" id="aClass"></div>
-    <div class="bday hidden" id="aBday"></div>
-    <dl class="rows">
-      <div><dt>תאריך</dt><dd class="fig" id="aDate"></dd></div>
-      <div><dt>שעה</dt><dd class="fig" id="aTime"></dd></div>
-      <div><dt>סניף</dt><dd id="aBranch"></dd></div>
-      <div><dt>מספר אישור</dt><dd class="fig" id="aRef"></dd></div>
-    </dl>
-    <div class="note">הנך זכאי להנחה ברשת <span class="nb">B-FRESH</span> בלבישת מדים בלבד</div>
-    <div class="raffle hidden" id="aRaffle"></div>
-    <div class="acts"><button class="btn block" id="redeemBtn">מימוש ההטבה</button></div>
-  </section>
+  <main class="work">
+    <div class="work-in">
+      <section class="view on" id="v-login">
+        <div class="kick">אימות זכאות</div>
+        <h1 class="h">כניסה לאישור ההטבה</h1>
+        <p class="lede">יש להזין מספר אישי או מספר תעודת זהות. לאחר האימות יוצג אישור זכאות להצגה בקופה.</p>
+        <form id="idForm" class="form" autocomplete="off" novalidate>
+          <label class="lbl" for="idInput">מספר אישי או תעודת זהות</label>
+          <input class="inp" id="idInput" inputmode="numeric" autocapitalize="characters" autocomplete="off" spellcheck="false" maxlength="12" aria-describedby="idErr">
+          <button class="btn block" id="idBtn" type="submit">המשך</button>
+          <div class="err" id="idErr" role="alert"></div>
+        </form>
+        <form id="pwForm" class="form hidden" autocomplete="off">
+          <label class="lbl" for="pwInput">סיסמה</label>
+          <input class="inp" id="pwInput" type="password" autocomplete="current-password">
+          <button class="btn block" id="pwBtn" type="submit">כניסה</button>
+          <div class="err" id="pwErr" role="alert"></div>
+          <button type="button" class="txtbtn" id="pwCancel">חזרה</button>
+        </form>
+        <p class="fine">המידע משמש לאימות הזכאות בלבד. במקרה של בעיה בזיהוי יש לפנות לצוות השלוחה.</p>
+      </section>
 
-  <section class="view" id="v-suspended">
-    <div class="status bad"><i></i>מושעה</div>
-    <div class="name" id="sName"></div>
-    <div class="note bad">הושעה פעילות, יש לפנות למפקד השלוחה.</div>
-    <div class="acts"><button class="btn line block" data-home>חזרה</button></div>
-  </section>
+      <section class="view" id="v-active">
+        <div class="status ok"><i class="pulse"></i>זכאי להטבה</div>
+        <div class="name" id="aName"></div>
+        <div class="sub" id="aClass"></div>
+        <div class="bday hidden" id="aBday"></div>
+        <dl class="rows">
+          <div><dt>תאריך</dt><dd class="fig" id="aDate"></dd></div>
+          <div><dt>שעה</dt><dd class="fig" id="aTime"></dd></div>
+          <div><dt>סניף</dt><dd id="aBranch"></dd></div>
+          <div><dt>מספר אישור</dt><dd class="fig" id="aRef"></dd></div>
+        </dl>
+        <div class="note">הנך זכאי להנחה ברשת <span class="nb">B-FRESH</span> בלבישת מדים בלבד</div>
+        <div class="raffle hidden" id="aRaffle"></div>
+        <div class="acts"><button class="btn block" id="redeemBtn">מימוש ההטבה</button></div>
+      </section>
 
-  <section class="view" id="v-unreg">
-    <div class="status gray"><i></i>לא רשום</div>
-    <h1 class="h" style="margin-top:14px">משתמש לא רשום במערכת</h1>
-    <div class="note gray">המספר שהוזן אינו מופיע ברשימת השוחרים.<small>יש לוודא שהמספר הוזן נכון. אם הבעיה נמשכת, יש לפנות לצוות השלוחה.</small></div>
-    <div class="acts"><button class="btn line block" data-home>חזרה</button></div>
-  </section>
+      <section class="view" id="v-suspended">
+        <div class="status bad"><i></i>מושעה</div>
+        <div class="name" id="sName"></div>
+        <div class="note bad">הושעה פעילות, יש לפנות למפקד השלוחה.</div>
+        <div class="acts"><button class="btn line block" data-home>חזרה</button></div>
+      </section>
 
-  <section class="view" id="v-seller">
-    <h1 class="h">אישור מוכר</h1>
-    <p class="seller-who" id="sellerWho"></p>
-    <div class="branches" id="branches"></div>
-    <div class="pin" id="pin"></div>
-    <div class="keypad" id="keypad"></div>
-    <div class="err" id="sellerErr" style="text-align:center"></div>
-    <button class="btn line block" id="backBtn" style="margin-top:6px">חזרה</button>
-  </section>
+      <section class="view" id="v-unreg">
+        <div class="status gray"><i></i>לא רשום</div>
+        <h1 class="h" style="margin-top:12px">משתמש לא רשום במערכת</h1>
+        <div class="note gray">המספר שהוזן אינו מופיע ברשימת השוחרים.<small>יש לוודא שהמספר הוזן נכון. אם הבעיה נמשכת, יש לפנות לצוות השלוחה.</small></div>
+        <div class="acts"><button class="btn line block" data-home>חזרה</button></div>
+      </section>
 
-  <section class="view" id="v-done">
-    <div class="status ok"><i></i>המימוש אושר</div>
-    <div class="name" id="dName"></div>
-    <dl class="rows" id="dRows"></dl>
-    <div class="raffle hidden" id="dRaffle"></div>
-    <div class="acts"><button class="btn line block" data-home>סיום</button></div>
-  </section>
+      <section class="view" id="v-seller">
+        <div class="kick">לשימוש המוכר</div>
+        <h1 class="h">אישור מוכר</h1>
+        <p class="seller-who" id="sellerWho"></p>
+        <div class="branches" id="branches"></div>
+        <div class="pin" id="pin"></div>
+        <div class="keypad" id="keypad"></div>
+        <div class="err" id="sellerErr" style="text-align:center" role="alert"></div>
+        <button class="btn line block" id="backBtn" style="margin-top:6px">חזרה</button>
+      </section>
 
-  <section class="view" id="v-expired">
-    <div class="status gray"><i></i><span id="eTitle">תוקף האישור הסתיים</span></div>
-    <h1 class="h" style="margin-top:14px">יש לבצע אימות מחדש</h1>
-    <p class="lede" id="eText"></p>
-    <div class="acts"><button class="btn block" data-home>אימות מחדש</button></div>
-  </section>
-</main>
-<div class="foot">שלוחת חיל האוויר אשדוד</div>
-<div class="timer" id="timer"><div class="prog" id="prog"></div><div class="in"><span class="l">תוקף האישור</span><span class="v" id="tt">10:00</span></div></div>
+      <section class="view" id="v-done">
+        <div class="status ok"><i></i>המימוש אושר</div>
+        <div class="name" id="dName"></div>
+        <dl class="rows" id="dRows"></dl>
+        <div class="raffle hidden" id="dRaffle"></div>
+        <div class="acts"><button class="btn line block" data-home>סיום</button></div>
+      </section>
+
+      <section class="view" id="v-expired">
+        <div class="status gray"><i></i><span id="eTitle">תוקף האישור הסתיים</span></div>
+        <h1 class="h" style="margin-top:12px">יש לבצע אימות מחדש</h1>
+        <p class="lede" id="eText"></p>
+        <div class="acts"><button class="btn block" data-home>אימות מחדש</button></div>
+      </section>
+    </div>
+    <div class="work-foot"><span>שלוחת חיל האוויר אשדוד</span><span>מסלול השוחרות</span></div>
+  </main>
+  <div class="timer" id="timer"><div class="prog" id="prog"></div><div class="in"><span class="l">תוקף האישור</span><span class="v" id="tt">10:00</span></div></div>
 </div>
 
 <!-- =====================================================================
@@ -590,6 +672,7 @@ const SUPABASE_ANON_KEY = 'sb_publishable_jiDIQEkV3HD-7N-JS2QY8w_vlOxml-D';
 
   function show(id){
     document.querySelectorAll('#cadetApp .view').forEach(v => v.classList.toggle('on', v.id === id));
+    $('cadetApp').dataset.view = id;
     $('timer').classList.toggle('on', !!(S && !S.redeemed && (id === 'v-active' || id === 'v-seller')));
     window.scrollTo(0, 0);
   }
@@ -795,7 +878,7 @@ const SUPABASE_ANON_KEY = 'sb_publishable_jiDIQEkV3HD-7N-JS2QY8w_vlOxml-D';
       token = null; ss.del('bf_admin'); lastVer = null; lastMaxId = null; raffleInit = false; linksSig = '';
       $('adminApp').classList.add('hidden'); $('cadetApp').classList.remove('hidden');
       $('mastAdmin').classList.add('hidden'); $('mastCadet').classList.remove('hidden');
-      $('orgTitle').textContent = 'מסלול השוחרות · שלוחת אשדוד';
+      $('orgTitle').textContent = 'מסלול השוחרות';
       document.title = 'אימות זכאות · שלוחת אשדוד';
       $('pwCancel').click(); show('v-login');
       if (msg) $('idErr').textContent = msg;
@@ -1201,7 +1284,7 @@ const SUPABASE_ANON_KEY = 'sb_publishable_jiDIQEkV3HD-7N-JS2QY8w_vlOxml-D';
           <div class="url">${esc(branchUrl(b.id))}</div>
           <div class="acts2"><button type="button" class="btn sm line" data-copy="${b.id}">העתקת קישור</button><button type="button" class="btn sm line" data-open="${b.id}">פתיחה</button><button type="button" class="btn sm line" data-qr="${b.id}">הורדת QR</button></div>
         </div><div class="qr" id="qr${b.id}"></div></div>`).join('');
-      if (window.QRCode) branches.forEach(b => { try { new QRCode($('qr' + b.id), { text: branchUrl(b.id), width: 400, height: 400, colorDark: '#14365d', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.M }); } catch {} });
+      if (window.QRCode) branches.forEach(b => { try { new QRCode($('qr' + b.id), { text: branchUrl(b.id), width: 400, height: 400, colorDark: '#13325a', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.M }); } catch {} });
     }
     $('links').addEventListener('click', async (e) => {
       const b = e.target.closest('button'); if (!b) return;
