@@ -258,9 +258,30 @@ dl.rows dd.fig{font-size:1.2rem;direction:ltr;letter-spacing:.01em}
 .view.on dl.rows>div:nth-child(2){animation-delay:.26s}
 .view.on dl.rows>div:nth-child(3){animation-delay:.32s}
 .view.on dl.rows>div:nth-child(4){animation-delay:.38s}
+.view.on dl.rows>div:nth-child(5){animation-delay:.44s}
+dl.rows dd.disc{color:var(--ok);font-size:1.35rem;font-weight:700}
+/* כרטיס אחוז ההנחה בממשק הניהול */
+.disc-card{display:flex;align-items:center;justify-content:space-between;gap:24px 40px;flex-wrap:wrap}
+.disc-ctl{display:flex;align-items:center;gap:14px}
+.disc-ctl .step{width:46px;height:46px;border-radius:50%;border:1px solid var(--rule);background:var(--field);font-size:1.5rem;line-height:1;cursor:pointer;color:var(--accent);transition:background .15s,transform .1s}
+.disc-ctl .step:hover{background:var(--page)}
+.disc-ctl .step:active{transform:scale(.92)}
+.disc-big{display:flex;align-items:baseline;direction:ltr;border-bottom:2px solid var(--line-strong);padding:0 4px}
+.disc-big input{width:2.4ch;border:0;background:transparent;font-size:3.2rem;font-weight:700;color:var(--ink);text-align:center;outline:none;line-height:1.1;-moz-appearance:textfield}
+.disc-big input::-webkit-outer-spin-button,.disc-big input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.disc-big span{font-size:2rem;font-weight:600;color:var(--muted)}
+.disc-big:focus-within{border-bottom-color:var(--accent)}
+.presets{display:flex;gap:6px;flex-wrap:wrap}
+.presets button{min-width:58px;height:40px;border:1px solid var(--rule);border-radius:4px;background:var(--field);font-weight:600;cursor:pointer;transition:background .15s,border-color .15s}
+.presets button:hover{background:var(--page)}
+.presets button.on{background:var(--btn);border-color:var(--btn);color:var(--btn-fg)}
+.disc-side{display:flex;flex-direction:column;gap:12px;align-items:flex-start}
+.disc-note{font-size:.86rem;color:var(--faint)}
+.chip-link{background:none;border:1px solid var(--rule);border-radius:99px;padding:2px 12px;font-size:.85rem;font-weight:600;color:var(--ok);cursor:pointer;margin-inline-start:8px;vertical-align:middle;transition:background .15s}
+.chip-link:hover{background:var(--ok-bg)}
 .view.on .raffle .track i{animation:growx 1s .45s var(--ease) both;transform-origin:right}
-.note.live{position:relative;overflow:hidden}
-.note.live::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,var(--sheen) 50%,transparent 65%);animation:sheen 3.8s ease-in-out infinite;pointer-events:none}
+.note.shine{position:relative;overflow:hidden}
+.note.shine::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,var(--sheen) 50%,transparent 65%);animation:sheen 3.8s ease-in-out infinite;pointer-events:none}
 .pin span.f{animation:pop .18s var(--ease)}
 .keypad button{transition:background .1s,transform .08s}
 .keypad button:active{transform:scale(.96)}
@@ -435,7 +456,7 @@ label.chk{display:flex;align-items:center;gap:8px;font-weight:400;font-size:.94r
     <div class="pane-in">
       <div class="unit">שלוחת אשדוד</div>
       <div class="title">הטבת שוחרים<br>ברשת <span class="nb">B FRESH</span></div>
-      <div class="offer"><span class="pct" id="panePct">20%</span><span><b>הנחה על כל משקה</b><br>בלבישת מדים בלבד</span></div>
+      <div class="offer"><span class="pct" id="panePct">15%</span><span><b>הנחה על כל משקה</b><br>בלבישת מדים בלבד</span></div>
       <ol class="steps">
         <li><b>הזדהות</b><span>מספר אישי או מספר תעודת זהות</span></li>
         <li><b>הצגת האישור</b><span>מסך האישור מוצג למוכר בקופה</span></li>
@@ -473,12 +494,13 @@ label.chk{display:flex;align-items:center;gap:8px;font-weight:400;font-size:.94r
         <div class="sub" id="aClass"></div>
         <div class="bday hidden" id="aBday"></div>
         <dl class="rows">
+          <div><dt>הנחה</dt><dd class="fig disc" id="aDisc"></dd></div>
           <div><dt>תאריך</dt><dd class="fig" id="aDate"></dd></div>
           <div><dt>שעה</dt><dd class="fig" id="aTime"></dd></div>
           <div><dt>סניף</dt><dd id="aBranch"></dd></div>
           <div><dt>מספר אישור</dt><dd class="fig" id="aRef"></dd></div>
         </dl>
-        <div class="note live">הנך זכאי להנחה ברשת <span class="nb">B-FRESH</span> בלבישת מדים בלבד</div>
+        <div class="note shine">הנך זכאי להנחה ברשת <span class="nb">B-FRESH</span> בלבישת מדים בלבד</div>
         <div class="raffle hidden" id="aRaffle"></div>
         <div class="acts"><button class="btn block" id="redeemBtn">מימוש ההטבה</button></div>
       </section>
@@ -544,7 +566,7 @@ label.chk{display:flex;align-items:center;gap:8px;font-weight:400;font-size:.94r
   <div class="wrap">
     <div class="tab" id="t-stats">
       <div class="ph">
-        <div><h2>סטטיסטיקות</h2><p>מימושי ההטבה לפי שוחר, כיתה, יום, שעה וסניף</p></div>
+        <div><h2>סטטיסטיקות</h2><p>מימושי ההטבה לפי שוחר, כיתה, יום, שעה וסניף<button type="button" class="chip-link" id="discChip" title="שינוי אחוז ההנחה">הנחה פעילה: 15%</button></p></div>
         <div class="toolbar">
           <div class="seg" id="range"><button data-r="today">היום</button><button data-r="7">7 ימים</button><button data-r="30">30 ימים</button><button data-r="month">החודש</button><button data-r="all" class="on">הכל</button></div>
           <select id="statBranch"></select>
@@ -566,7 +588,7 @@ label.chk{display:flex;align-items:center;gap:8px;font-weight:400;font-size:.94r
         <div class="panel"><h3>לפי שעה</h3><div class="vbars thin" id="byHour" style="height:130px"></div><div class="vlabels thin" id="byHourL"></div></div>
       </div>
       <div class="panel gap"><h3>מימושים אחרונים <small>מתעדכן אוטומטית</small></h3>
-        <div class="tbl" style="max-height:360px"><table><thead><tr><th>תאריך</th><th>שעה</th><th>שוחר</th><th>כיתה</th><th>סניף</th></tr></thead><tbody id="recent"></tbody></table></div>
+        <div class="tbl" style="max-height:360px"><table><thead><tr><th>תאריך</th><th>שעה</th><th>שוחר</th><th>כיתה</th><th>סניף</th><th>הנחה</th></tr></thead><tbody id="recent"></tbody></table></div>
       </div>
     </div>
 
@@ -619,7 +641,21 @@ label.chk{display:flex;align-items:center;gap:8px;font-weight:400;font-size:.94r
     </div>
 
     <div class="tab hidden" id="t-settings">
-      <div class="ph"><div><h2>הגדרות</h2><p>קוד מוכר, תוקף אישור, הגרלה, סניפים וסיסמה</p></div></div>
+      <div class="ph"><div><h2>הגדרות</h2><p>אחוז הנחה, קוד מוכר, תוקף אישור, הגרלה, סניפים וסיסמה</p></div></div>
+      <form id="discForm" class="panel" style="margin-bottom:16px">
+        <h3>אחוז ההנחה <small>השינוי חל מיד על כל השוחרים ובכל הסניפים</small></h3>
+        <div class="disc-card">
+          <div class="disc-ctl">
+            <button type="button" class="step" data-step="1" aria-label="הגדלה">+</button>
+            <label class="disc-big" for="discInput"><input id="discInput" type="number" inputmode="numeric" min="1" max="100" required><span>%</span></label>
+            <button type="button" class="step" data-step="-1" aria-label="הקטנה">&minus;</button>
+          </div>
+          <div class="disc-side">
+            <div class="presets" id="presets"><button type="button" data-v="10">10%</button><button type="button" data-v="15">15%</button><button type="button" data-v="20">20%</button><button type="button" data-v="25">25%</button><button type="button" data-v="30">30%</button></div>
+            <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><button class="btn" type="submit" id="discSave">עדכון ההנחה</button><span class="disc-note" id="discNote"></span></div>
+          </div>
+        </div>
+      </form>
       <form id="setForm">
         <div class="panel"><h3>מימוש</h3>
           <div class="form-grid">
@@ -769,6 +805,13 @@ const SUPABASE_ANON_KEY = 'sb_publishable_jiDIQEkV3HD-7N-JS2QY8w_vlOxml-D';
   const cups = (n) => n === 1 ? 'כוס אחת' : `${n} כוסות`;
   const refOf = (id) => String(id || '').replace(/[^0-9a-f]/gi, '').slice(-6).toUpperCase();
 
+  let DISCOUNT = 15;
+  const pctTxt = (n) => `${n}%`;
+  function setDiscount(n, animate){
+    if (!Number.isInteger(n) || n < 1) return;
+    const prev = DISCOUNT; DISCOUNT = n;
+    if (animate) countUp($('panePct'), animate === 'from0' ? 0 : prev, n, 1100, '%'); else $('panePct').textContent = pctTxt(n);
+  }
   const URL_BRANCH = (() => { const n = Number(new URLSearchParams(location.search).get('b')); return Number.isInteger(n) && n > 0 ? n : null; })();
   let branches = [];
   const branchName = (id) => branches.find(b => b.id === id)?.name || '';
@@ -845,6 +888,7 @@ const SUPABASE_ANON_KEY = 'sb_publishable_jiDIQEkV3HD-7N-JS2QY8w_vlOxml-D';
     $('aBday').textContent = `יום הולדת שמח, ${S.first_name}. צוות השלוחה מאחל מזל טוב.`;
     $('aBranch').textContent = branch ? branchName(branch) : 'ייבחר בעת המימוש';
     $('aRef').textContent = refOf(S.session_id);
+    $('aDisc').textContent = pctTxt(S.discount_percent || DISCOUNT);
     setRaffle($('aRaffle'), S.raffle);
     show('v-active'); startTick();
   }
@@ -866,6 +910,7 @@ const SUPABASE_ANON_KEY = 'sb_publishable_jiDIQEkV3HD-7N-JS2QY8w_vlOxml-D';
       $('idInput').value = '';
       if (data.status === 'active'){
         S = { ...data, offset: Date.parse(data.server_now) - Date.now(), total: Date.parse(data.expires_at) - Date.parse(data.server_now), redeemed: false };
+        if (data.discount_percent && data.discount_percent !== DISCOUNT) setDiscount(data.discount_percent, true);
         ss.set(KEY, S); renderActive();
       } else if (data.status === 'suspended'){
         $('sName').textContent = `${data.first_name || ''} ${data.last_name || ''}`.trim(); show('v-suspended');
@@ -936,7 +981,7 @@ const SUPABASE_ANON_KEY = 'sb_publishable_jiDIQEkV3HD-7N-JS2QY8w_vlOxml-D';
       S.redeemed = true; clearInterval(tick); ss.del(KEY);
       const d = new Date(data.redeemed_at);
       $('dName').textContent = `${S.first_name} ${S.last_name || ''}`.trim();
-      $('dRows').innerHTML = `<div><dt>תאריך</dt><dd class="fig">${fmtDate(dayKey(d))}</dd></div><div><dt>שעה</dt><dd class="fig">${fTime.format(d)}</dd></div><div><dt>סניף</dt><dd>${esc(data.branch_name || '')}</dd></div><div><dt>מספר אישור</dt><dd class="fig">${refOf(S.session_id)}</dd></div>`;
+      $('dRows').innerHTML = `<div><dt>הנחה</dt><dd class="fig disc">${pctTxt(data.discount_percent || S.discount_percent || DISCOUNT)}</dd></div><div><dt>תאריך</dt><dd class="fig">${fmtDate(dayKey(d))}</dd></div><div><dt>שעה</dt><dd class="fig">${fTime.format(d)}</dd></div><div><dt>סניף</dt><dd>${esc(data.branch_name || '')}</dd></div><div><dt>מספר אישור</dt><dd class="fig">${refOf(S.session_id)}</dd></div>`;
       setRaffle($('dRaffle'), data.raffle);
       show('v-done');
       if (navigator.vibrate) navigator.vibrate(80);
@@ -946,7 +991,7 @@ const SUPABASE_ANON_KEY = 'sb_publishable_jiDIQEkV3HD-7N-JS2QY8w_vlOxml-D';
   $('redeemBtn').addEventListener('click', () => {
     if (!S || remaining() <= 0) return expire();
     pin = ''; renderPin(); $('sellerErr').textContent = '';
-    $('sellerWho').innerHTML = `<b>${esc(`${S.first_name} ${S.last_name || ''}`.trim())}</b>${S.class_name ? ` · כיתה ${esc(S.class_name)}` : ''}. יש להזין את קוד המוכר לאישור ההנחה.`;
+    $('sellerWho').innerHTML = `<b>${esc(`${S.first_name} ${S.last_name || ''}`.trim())}</b>${S.class_name ? ` · כיתה ${esc(S.class_name)}` : ''}. יש להזין את קוד המוכר לאישור הנחה של <b>${pctTxt(S.discount_percent || DISCOUNT)}</b>.`;
     renderBranches(); show('v-seller');
   });
   $('backBtn').addEventListener('click', () => show('v-active'));
@@ -1210,13 +1255,13 @@ const SUPABASE_ANON_KEY = 'sb_publishable_jiDIQEkV3HD-7N-JS2QY8w_vlOxml-D';
       vbars('byDay', dl, dv);
       const rec = [...P].sort((a, b) => b.id - a.id).slice(0, 50);
       $('recent').innerHTML = rec.length ? rec.map(p => { const d = new Date(p.created_at), c = cById[p.cadet_id];
-        return `<tr class="${prevMax !== undefined && prevMax !== null && p.id > prevMax ? 'flash' : ''}"><td class="num">${fmtDate(pKey(p))}</td><td class="num">${fTime.format(d)}</td><td>${esc(c ? fullName(c) : p.cadet_name)}</td><td>${esc(p.class_name || '')}</td><td>${esc(bName[p.branch_id] || '')}</td></tr>`; }).join('')
-        : '<tr><td colspan="5" class="empty">אין מימושים בטווח הזה</td></tr>';
+        return `<tr class="${prevMax !== undefined && prevMax !== null && p.id > prevMax ? 'flash' : ''}"><td class="num">${fmtDate(pKey(p))}</td><td class="num">${fTime.format(d)}</td><td>${esc(c ? fullName(c) : p.cadet_name)}</td><td>${esc(p.class_name || '')}</td><td>${esc(bName[p.branch_id] || '')}</td><td class="num">${p.discount_percent ? p.discount_percent + '%' : ''}</td></tr>`; }).join('')
+        : '<tr><td colspan="6" class="empty">אין מימושים בטווח הזה</td></tr>';
     }
     $('exportBtn').addEventListener('click', () => {
       if (!window.XLSX) return toast('רכיב האקסל נטען, יש לנסות שוב בעוד רגע', 'bad');
       const P = filtered(), bName = Object.fromEntries(branches.map(b => [b.id, b.name])), cById = Object.fromEntries(cadets.map(c => [c.id, c]));
-      const rows = P.map(p => { const d = new Date(p.created_at), c = cById[p.cadet_id]; return { 'תאריך': fmtDate(pKey(p)), 'שעה': fTime.format(d), 'יום': WD_HE[WD[fWd.format(d)]], 'שוחר': c ? fullName(c) : p.cadet_name, 'כיתה': p.class_name || '', 'סניף': bName[p.branch_id] || '' }; });
+      const rows = P.map(p => { const d = new Date(p.created_at), c = cById[p.cadet_id]; return { 'תאריך': fmtDate(pKey(p)), 'שעה': fTime.format(d), 'יום': WD_HE[WD[fWd.format(d)]], 'שוחר': c ? fullName(c) : p.cadet_name, 'כיתה': p.class_name || '', 'סניף': bName[p.branch_id] || '', 'הנחה': p.discount_percent ? p.discount_percent + '%' : '' }; });
       const byCadet = {}; rows.forEach(r => { const k = r['שוחר'] + '|' + r['כיתה']; (byCadet[k] ||= { 'שוחר': r['שוחר'], 'כיתה': r['כיתה'], 'כוסות': 0 })['כוסות']++; });
       const byClass = {}; rows.forEach(r => { const k = r['כיתה'] || 'ללא כיתה'; (byClass[k] ||= { 'כיתה': k, 'כוסות': 0 })['כוסות']++; });
       const wb = XLSX.utils.book_new(); wb.Workbook = { Views: [{ RTL: true }] };
@@ -1394,7 +1439,44 @@ const SUPABASE_ANON_KEY = 'sb_publishable_jiDIQEkV3HD-7N-JS2QY8w_vlOxml-D';
     function syncRaffleFields(){ const c = $('sRMode').value === 'custom'; $('sRFrom').disabled = $('sRTo').disabled = !c; }
     $('sRMode').addEventListener('change', syncRaffleFields);
     $('setForm').addEventListener('input', () => { dirty = true; $('dirtyNote').textContent = 'יש שינויים שלא נשמרו'; });
+    /* ---------- אחוז ההנחה ---------- */
+    let discDirty = false;
+    const discVal = () => Math.round(Number($('discInput').value));
+    function syncDisc(){
+      const v = discVal(), cur = settings.discount_percent || 15;
+      document.querySelectorAll('#presets button').forEach(b => b.classList.toggle('on', Number(b.dataset.v) === v));
+      discDirty = v !== cur;
+      $('discSave').disabled = !discDirty || !(v >= 1 && v <= 100);
+      $('discNote').textContent = !(v >= 1 && v <= 100) ? 'יש להזין ערך בין 1 ל 100' : discDirty ? `ההנחה הנוכחית ${cur}%, השינוי עוד לא נשמר` : 'זו ההנחה הפעילה כרגע';
+    }
+    function renderDisc(){
+      const cur = settings.discount_percent || 15;
+      $('discChip').textContent = `הנחה פעילה: ${cur}%`;
+      if (!discDirty) $('discInput').value = cur;
+      syncDisc();
+    }
+    $('discInput').addEventListener('input', syncDisc);
+    $('presets').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; $('discInput').value = b.dataset.v; syncDisc(); });
+    document.querySelectorAll('#discForm .step').forEach(b => b.addEventListener('click', () => {
+      const v = Math.min(100, Math.max(1, (discVal() || 0) + Number(b.dataset.step))); $('discInput').value = v; syncDisc();
+    }));
+    $('discChip').addEventListener('click', () => { document.querySelector('#tabs button[data-t="settings"]').click(); setTimeout(() => $('discInput').focus(), 60); });
+    $('discForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const v = discVal();
+      if (!(v >= 1 && v <= 100)) return toast('יש להזין אחוז הנחה בין 1 ל 100', 'bad');
+      if (v !== (settings.discount_percent || 15) && !confirm(`לעדכן את ההנחה ל ${v}%? השינוי יחול מיד על כל השוחרים.`)) return;
+      busy($('discSave'), true);
+      try {
+        const r = await api('admin_set_discount', { p_percent: v });
+        if (!r.ok) return toast('שגיאה בעדכון ההנחה', 'bad');
+        settings.discount_percent = v; discDirty = false; renderDisc(); toast(`ההנחה עודכנה ל ${v}%`, 'ok');
+      } catch {}
+      finally { busy($('discSave'), false, 'עדכון ההנחה'); syncDisc(); }
+    });
+
     function renderSettings(){
+      renderDisc();
       if (dirty) return;
       $('sCode').value = settings.seller_code || ''; $('sMin').value = settings.window_minutes || 10;
       $('sREnabled').checked = settings.raffle_enabled !== false; $('sRMin').value = settings.raffle_threshold || 3;
@@ -1451,7 +1533,11 @@ const SUPABASE_ANON_KEY = 'sb_publishable_jiDIQEkV3HD-7N-JS2QY8w_vlOxml-D';
   /* ---------- הפעלה ---------- */
   const h = Number(fHour.format(new Date()));
   $('greet').textContent = h >= 5 && h < 12 ? 'בוקר טוב' : h >= 12 && h < 17 ? 'צהריים טובים' : h >= 17 && h < 21 ? 'ערב טוב' : 'לילה טוב';
-  setTimeout(() => countUp($('panePct'), 0, 20, 1100, '%'), 250);
+  (async () => {
+    let n = DISCOUNT;
+    try { const { data } = await sb.rpc('public_info'); if (data && data.discount_percent) n = data.discount_percent; } catch {}
+    DISCOUNT = n; countUp($('panePct'), 0, n, 1100, '%');
+  })();
   loadBranches().then(() => {
     renderBranchLbl();
     const t = ss.get('bf_admin');
